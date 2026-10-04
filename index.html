@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,19 +8,33 @@
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
 
+    gtag('js', new Date());
     gtag('config', 'G-2DH0M7YE2D');
   </script>
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>StartOps — Build. Test. Improve. Grow.</title>
-  <meta name="description" content="StartOps helps startups build the digital tools and systems they need to launch, operate, and grow. Powered by CathiesNest Digital." />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b9c9d3'/%3E%3Cpath d='M44 12C30 14 20 26 18 40l8 6c14-2 26-12 28-30z' fill='none' stroke='%232f7f86' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='38' cy='26' r='4' fill='%23c9a45c'/%3E%3C/svg%3E" />
+
+  <meta
+    name="description"
+    content="StartOps helps startups build the digital tools and systems they need to launch, operate, and grow. Powered by CathiesNest Digital."
+  />
+
+  <link
+    rel="icon"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b9c9d3'/%3E%3Cpath d='M44 12C30 14 20 26 18 40l8 6c14-2 26-12 28-30z' fill='none' stroke='%232f7f86' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='38' cy='26' r='4' fill='%23c9a45c'/%3E%3C/svg%3E"
+  />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
 
   <style>
     :root {
@@ -36,8 +51,15 @@
       --shadow: 0 10px 30px rgba(23, 54, 77, 0.12);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
       font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
@@ -46,12 +68,22 @@
       line-height: 1.6;
     }
 
-    a { color: var(--teal-dark); }
-    img, svg { max-width: 100%; }
+    a {
+      color: var(--teal-dark);
+    }
 
-    .container { width: min(1100px, 92%); margin-inline: auto; }
+    img,
+    svg {
+      max-width: 100%;
+    }
+
+    .container {
+      width: min(1100px, 92%);
+      margin-inline: auto;
+    }
 
     /* ---------- HERO ---------- */
+
     .hero {
       position: relative;
       min-height: 100vh;
@@ -68,7 +100,8 @@
 
     .hero::before {
       content: "";
-      position: absolute; inset: 0;
+      position: absolute;
+      inset: 0;
       background-image:
         radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.4px),
         radial-gradient(rgba(201,164,92,.45) 1px, transparent 1.4px);
@@ -87,6 +120,7 @@
     }
 
     /* Clickable rocket */
+
     .rocket-link {
       display: block;
       width: clamp(150px, 22vw, 250px);
@@ -101,13 +135,25 @@
       filter: drop-shadow(0 14px 18px rgba(23,54,77,.28));
     }
 
-    .rocket-link:active { transform: translateY(-2px) scale(.98); }
-    .rocket-link svg { width: 100%; height: auto; display: block; }
+    .rocket-link:active {
+      transform: translateY(-2px) scale(.98);
+    }
+
+    .rocket-link svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
     .rocket-hint {
-      display: block; text-align: center; margin-top: 10px;
-      font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
-      color: var(--navy-soft); opacity: .8;
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--navy-soft);
+      opacity: .8;
     }
 
     .divider {
@@ -153,7 +199,9 @@
       color: var(--navy-soft);
     }
 
-    .powered strong { color: var(--navy); }
+    .powered strong {
+      color: var(--navy);
+    }
 
     .hero-cta {
       margin-top: 28px;
@@ -194,7 +242,10 @@
     }
 
     /* ---------- SECTIONS ---------- */
-    section { padding: 80px 0; }
+
+    section {
+      padding: 80px 0;
+    }
 
     .eyebrow {
       font-size: .8rem;
@@ -223,9 +274,12 @@
       text-align: center;
     }
 
-    .about .lead { margin-inline: auto; }
+    .about .lead {
+      margin-inline: auto;
+    }
 
     /* ---------- WHAT WE BUILD CAROUSEL ---------- */
+
     .carousel-wrap {
       position: relative;
       margin-top: 40px;
@@ -257,7 +311,9 @@
       transition: transform .25s ease, box-shadow .25s ease;
     }
 
-    .card:nth-child(even) { border-top-color: var(--gold); }
+    .card:nth-child(even) {
+      border-top-color: var(--gold);
+    }
 
     .card:hover {
       transform: translateY(-5px);
@@ -331,8 +387,11 @@
       background: linear-gradient(180deg, var(--sky-light), var(--cream));
     }
 
-    /* Resources */
-    .resources { background: var(--cream); }
+    /* ---------- RESOURCES ---------- */
+
+    .resources {
+      background: var(--cream);
+    }
 
     .res-grid {
       margin-top: 36px;
@@ -360,7 +419,9 @@
       border-left-color: var(--gold);
     }
 
-    .res h3 { font-size: 1.15rem; }
+    .res h3 {
+      font-size: 1.15rem;
+    }
 
     .res p {
       color: var(--navy-soft);
@@ -385,14 +446,127 @@
       max-width: 640px;
     }
 
-    /* Promise */
+    /* ---------- CONTACT ---------- */
+
+    .contact {
+      background: linear-gradient(180deg, var(--cream), var(--sky-light));
+    }
+
+    .contact-grid {
+      margin-top: 36px;
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 32px;
+      align-items: start;
+    }
+
+    .contact-copy {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-copy h3 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.7rem;
+      margin-bottom: 12px;
+    }
+
+    .contact-copy p {
+      color: #dce6eb;
+      margin-bottom: 18px;
+    }
+
+    .contact-copy .contact-note {
+      font-size: .9rem;
+      color: var(--sky);
+      margin-bottom: 0;
+    }
+
+    .contact-form {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: .92rem;
+      margin-bottom: 7px;
+      color: var(--navy);
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      border: 1px solid #c8d2d7;
+      border-radius: 12px;
+      padding: 12px 14px;
+      font: inherit;
+      color: var(--navy);
+      background: #fbfcfc;
+      outline: none;
+      transition: border-color .2s ease, box-shadow .2s ease;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 3px rgba(47,127,134,.12);
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .contact-submit {
+      border: 0;
+      cursor: pointer;
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      padding: 13px 22px;
+      border-radius: 999px;
+      font: inherit;
+      font-weight: 600;
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+
+    .contact-submit:hover {
+      background: var(--teal-dark);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .form-note {
+      margin-top: 12px;
+      text-align: center;
+      font-size: .8rem;
+      color: var(--navy-soft);
+    }
+
+    /* ---------- PROMISE ---------- */
+
     .promise {
       background: var(--navy);
       color: var(--white);
       text-align: center;
     }
 
-    .promise .eyebrow { color: var(--gold); }
+    .promise .eyebrow {
+      color: var(--gold);
+    }
 
     .promise ul {
       list-style: none;
@@ -406,10 +580,16 @@
       font-size: clamp(1.15rem, 2.8vw, 1.6rem);
     }
 
-    .promise li:nth-child(odd) { color: var(--sky); }
-    .promise li:last-child { color: var(--gold); }
+    .promise li:nth-child(odd) {
+      color: var(--sky);
+    }
 
-    /* Footer */
+    .promise li:last-child {
+      color: var(--gold);
+    }
+
+    /* ---------- FOOTER ---------- */
+
     footer {
       background: #0f2638;
       color: #c3d0d8;
@@ -439,9 +619,12 @@
       gap: 8px;
     }
 
-    .foot-bottom strong { color: var(--white); }
+    .foot-bottom strong {
+      color: var(--white);
+    }
 
-    /* Back-to-top rocket */
+    /* ---------- BACK TO TOP ---------- */
+
     .to-top {
       position: fixed;
       right: 18px;
@@ -473,14 +656,21 @@
     }
 
     /* ---------- RESPONSIVE ---------- */
+
     @media (max-width: 900px) {
       .card {
         flex: 0 0 calc((100% - 20px) / 2);
       }
+
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (max-width: 760px) {
-      .hero { padding: 48px 0; }
+      .hero {
+        padding: 48px 0;
+      }
 
       .hero-inner {
         grid-template-columns: 1fr;
@@ -495,9 +685,17 @@
         align-self: auto;
       }
 
-      .rule { margin-inline: auto; }
-      .hero-cta { justify-content: center; }
-      section { padding: 60px 0; }
+      .rule {
+        margin-inline: auto;
+      }
+
+      .hero-cta {
+        justify-content: center;
+      }
+
+      section {
+        padding: 60px 0;
+      }
 
       .carousel-wrap {
         padding: 0 48px;
@@ -511,6 +709,11 @@
         width: 40px;
         height: 40px;
         font-size: 1.3rem;
+      }
+
+      .contact-copy,
+      .contact-form {
+        padding: 24px;
       }
     }
 
@@ -526,29 +729,93 @@
 <body id="top">
 
   <!-- ================= HERO ================= -->
+
   <header class="hero">
     <div class="container hero-inner">
 
       <!-- CLICKABLE ROCKET ICON -->
+
       <div>
-        <a class="rocket-link" href="#what-we-build" aria-label="StartOps rocket — explore what we build" title="Click the rocket to explore">
-          <svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+        <a
+          class="rocket-link"
+          href="#what-we-build"
+          aria-label="StartOps rocket — explore what we build"
+          title="Click the rocket to explore"
+        >
+          <svg
+            viewBox="0 0 240 260"
+            xmlns="http://www.w3.org/2000/svg"
+            role="img"
+            aria-hidden="true"
+          >
             <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+
               <!-- rocket body (teal outline) -->
-              <path d="M195 28C140 30 88 66 66 126l24 30c62-14 104-62 105-128z" stroke="#2f7f86" stroke-width="7"/>
+
+              <path
+                d="M195 28C140 30 88 66 66 126l24 30c62-14 104-62 105-128z"
+                stroke="#2f7f86"
+                stroke-width="7"
+              />
+
               <!-- inner fin curves -->
-              <path d="M66 126c-22 4-38 16-44 34 18 4 32 0 42-8" stroke="#2f7f86" stroke-width="7"/>
-              <path d="M90 156c-4 22-16 38-34 44-4-18 0-32 8-42" stroke="#2f7f86" stroke-width="7"/>
+
+              <path
+                d="M66 126c-22 4-38 16-44 34 18 4 32 0 42-8"
+                stroke="#2f7f86"
+                stroke-width="7"
+              />
+
+              <path
+                d="M90 156c-4 22-16 38-34 44-4-18 0-32 8-42"
+                stroke="#2f7f86"
+                stroke-width="7"
+              />
+
               <!-- inner circuit lines -->
-              <path d="M96 110c18-30 44-52 78-62" stroke="#2f7f86" stroke-width="5"/>
-              <path d="M122 140c20-14 38-34 48-58" stroke="#2f7f86" stroke-width="5"/>
+
+              <path
+                d="M96 110c18-30 44-52 78-62"
+                stroke="#2f7f86"
+                stroke-width="5"
+              />
+
+              <path
+                d="M122 140c20-14 38-34 48-58"
+                stroke="#2f7f86"
+                stroke-width="5"
+              />
+
               <!-- gold arc + flame streaks -->
-              <path d="M150 38c26 4 42 20 44 44" stroke="#c9a45c" stroke-width="6"/>
-              <path d="M62 150l-26 30" stroke="#c9a45c" stroke-width="6"/>
-              <path d="M80 164l-24 40" stroke="#c9a45c" stroke-width="6"/>
-              <path d="M102 172l-16 46" stroke="#c9a45c" stroke-width="6"/>
+
+              <path
+                d="M150 38c26 4 42 20 44 44"
+                stroke="#c9a45c"
+                stroke-width="6"
+              />
+
+              <path
+                d="M62 150l-26 30"
+                stroke="#c9a45c"
+                stroke-width="6"
+              />
+
+              <path
+                d="M80 164l-24 40"
+                stroke="#c9a45c"
+                stroke-width="6"
+              />
+
+              <path
+                d="M102 172l-16 46"
+                stroke="#c9a45c"
+                stroke-width="6"
+              />
+
             </g>
+
             <!-- network nodes -->
+
             <circle cx="66" cy="126" r="9" fill="#2f7f86"/>
             <circle cx="140" cy="95" r="9" fill="#2f7f86"/>
             <circle cx="140" cy="95" r="4" fill="#c9a45c"/>
@@ -556,6 +823,7 @@
             <circle cx="108" cy="200" r="4" fill="#dfe6e8"/>
           </svg>
         </a>
+
         <span class="rocket-hint">Tap the rocket</span>
       </div>
 
@@ -563,14 +831,33 @@
 
       <div class="brand">
         <h1>StartOps</h1>
-        <p class="tagline">Build. Test. Improve. Grow.</p>
-        <p class="subline">Startup Operations · Admin Tools · Digital Systems</p>
+
+        <p class="tagline">
+          Build. Test. Improve. Grow.
+        </p>
+
+        <p class="subline">
+          Startup Operations · Admin Tools · Digital Systems
+        </p>
+
         <hr class="rule" />
-        <p class="powered">Powered by <strong>CathiesNest Digital</strong></p>
+
+        <p class="powered">
+          Powered by <strong>CathiesNest Digital</strong>
+        </p>
 
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#what-we-build">What We Build</a>
-          <a class="btn btn-ghost" href="#resources">Free Resources</a>
+          <a class="btn btn-primary" href="#what-we-build">
+            What We Build
+          </a>
+
+          <a class="btn btn-ghost" href="#resources">
+            Free Resources
+          </a>
+
+          <a class="btn btn-ghost" href="#contact">
+            Contact StartOps
+          </a>
         </div>
       </div>
 
@@ -578,26 +865,49 @@
   </header>
 
   <!-- ================= ABOUT ================= -->
+
   <section class="about" id="about">
     <div class="container">
-      <p class="eyebrow">Digital solutions for startups &amp; growing businesses</p>
-      <h2>Practical digital solutions, built around you.</h2>
-      <p class="lead">StartOps helps startups build the digital tools and systems they need to launch, operate, and grow.</p>
+
+      <p class="eyebrow">
+        Digital solutions for startups &amp; growing businesses
+      </p>
+
+      <h2>
+        Practical digital solutions, built around you.
+      </h2>
+
+      <p class="lead">
+        StartOps helps startups build the digital tools and systems they need to launch, operate, and grow.
+      </p>
+
     </div>
   </section>
 
   <!-- ================= WHAT WE BUILD ================= -->
+
   <section class="build" id="what-we-build">
     <div class="container">
+
       <p class="eyebrow">🛠️ What We Build</p>
-      <h2>Tools and systems that keep your startup moving.</h2>
+
+      <h2>
+        Tools and systems that keep your startup moving.
+      </h2>
 
       <div class="carousel-wrap">
-        <button class="carousel-btn prev" id="carouselPrev" type="button" aria-label="Previous tools">
+
+        <button
+          class="carousel-btn prev"
+          id="carouselPrev"
+          type="button"
+          aria-label="Previous tools"
+        >
           ←
         </button>
 
         <div class="carousel-viewport">
+
           <div class="cards" id="buildCards">
 
             <article class="card">
@@ -645,57 +955,280 @@
           </div>
         </div>
 
-        <button class="carousel-btn next" id="carouselNext" type="button" aria-label="Next tools">
+        <button
+          class="carousel-btn next"
+          id="carouselNext"
+          type="button"
+          aria-label="Next tools"
+        >
           →
         </button>
+
       </div>
     </div>
   </section>
 
   <!-- ================= RESOURCES ================= -->
+
   <section class="resources" id="resources">
     <div class="container">
+
       <p class="eyebrow">🌱 Resources</p>
-      <h2>Helpful spaces to keep you moving.</h2>
+
+      <h2>
+        Helpful spaces to keep you moving.
+      </h2>
 
       <div class="res-grid">
-        <a class="res" href="https://cathiesnest.github.io/tabing-guhit-3.0/" target="_blank" rel="noopener">
+
+        <a
+          class="res"
+          href="https://cathiesnest.github.io/tabing-guhit-3.0/"
+          target="_blank"
+          rel="noopener"
+        >
           <h3>Find Your Niche</h3>
-          <p>Discover a clearer direction for your skills, work or next move.</p>
-          <span class="go">Open →</span>
+
+          <p>
+            Discover a clearer direction for your skills, work or next move.
+          </p>
+
+          <span class="go">
+            Open →
+          </span>
         </a>
 
-        <a class="res" href="https://cathiesnest.github.io/money-matters/#top" target="_blank" rel="noopener">
+        <a
+          class="res"
+          href="https://cathiesnest.github.io/money-matters/#top"
+          target="_blank"
+          rel="noopener"
+        >
           <h3>Money Matters</h3>
-          <p>A practical space for better money decisions and your next financial move.</p>
-          <span class="go">Open →</span>
+
+          <p>
+            A practical space for better money decisions and your next financial move.
+          </p>
+
+          <span class="go">
+            Open →
+          </span>
         </a>
+
       </div>
 
-      <h3 class="upskill-title">Learn &amp; Upskill — Alison</h3>
-      <p class="upskill-sub">Explore courses and skills that can help you keep learning and growing.</p>
+      <h3 class="upskill-title">
+        Learn &amp; Upskill — Alison
+      </h3>
+
+      <p class="upskill-sub">
+        Explore courses and skills that can help you keep learning and growing.
+      </p>
 
       <div class="res-grid">
-        <a class="res" href="https://alison.com/courses/business?utm_source=alison_user&utm_medium=affiliate&utm_campaign=42404117" target="_blank" rel="sponsored noopener">
+
+        <a
+          class="res"
+          href="https://alison.com/courses/business?utm_source=alison_user&utm_medium=affiliate&utm_campaign=42404117"
+          target="_blank"
+          rel="sponsored noopener"
+        >
           <h3>Business Courses</h3>
-          <p>Build practical business knowledge at your own pace.</p>
-          <span class="go">Browse courses →</span>
+
+          <p>
+            Build practical business knowledge at your own pace.
+          </p>
+
+          <span class="go">
+            Browse courses →
+          </span>
         </a>
 
-        <a class="res" href="https://alison.com/courses/management?utm_source=alison_user&utm_medium=affiliate&utm_campaign=42404117" target="_blank" rel="sponsored noopener">
+        <a
+          class="res"
+          href="https://alison.com/courses/management?utm_source=alison_user&utm_medium=affiliate&utm_campaign=42404117"
+          target="_blank"
+          rel="sponsored noopener"
+        >
           <h3>Management Courses</h3>
-          <p>Grow your leadership and team-management skills.</p>
-          <span class="go">Browse courses →</span>
+
+          <p>
+            Grow your leadership and team-management skills.
+          </p>
+
+          <span class="go">
+            Browse courses →
+          </span>
         </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+
+  <section class="contact" id="contact">
+    <div class="container">
+
+      <p class="eyebrow">💬 Contact StartOps</p>
+
+      <h2>
+        Have a project or business need in mind?
+      </h2>
+
+      <p class="lead">
+        Tell us a little about what you're working on. We'll review your message and get back to you.
+      </p>
+
+      <div class="contact-grid">
+
+        <div class="contact-copy">
+
+          <h3>
+            Let's start with the problem.
+          </h3>
+
+          <p>
+            Whether you need a simple digital tool, a workflow, a tracker, a business system, or a custom solution, StartOps can help you explore a practical next step.
+          </p>
+
+          <p>
+            You don't need to have everything figured out before reaching out.
+          </p>
+
+          <p class="contact-note">
+            StartOps is focused on practical, affordable digital solutions for startups and growing businesses.
+          </p>
+
+        </div>
+
+        <!-- FORMSPREE CONTACT FORM -->
+
+        <form
+          class="contact-form"
+          action="https://formspree.io/f/mdeanvyq"
+          method="POST"
+        >
+
+          <input
+            type="hidden"
+            name="_subject"
+            value="New StartOps Client Inquiry"
+          />
+
+          <div class="form-group">
+            <label for="name">
+              Your name
+            </label>
+
+            <input
+              type="text"
+              id="name"
+              name="name"
+              placeholder="Enter your name"
+              autocomplete="name"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">
+              Your email address
+            </label>
+
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="you@example.com"
+              autocomplete="email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inquiry">
+              What can we help you with?
+            </label>
+
+            <select
+              id="inquiry"
+              name="inquiry_type"
+              required
+            >
+              <option value="" selected disabled>
+                Select an option
+              </option>
+
+              <option value="General inquiry">
+                General inquiry
+              </option>
+
+              <option value="Digital tools or templates">
+                Digital tools or templates
+              </option>
+
+              <option value="Business systems">
+                Business systems
+              </option>
+
+              <option value="Custom solution">
+                Custom solution
+              </option>
+
+              <option value="Collaboration">
+                Collaboration
+              </option>
+
+              <option value="Other">
+                Other
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="message">
+              Your message
+            </label>
+
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Tell us a little about what you need..."
+              required
+            ></textarea>
+          </div>
+
+          <button
+            class="contact-submit"
+            type="submit"
+          >
+            Send Message
+          </button>
+
+          <p class="form-note">
+            Your message will be securely submitted for review.
+          </p>
+
+        </form>
+
       </div>
     </div>
   </section>
 
   <!-- ================= PROMISE ================= -->
+
   <section class="promise" id="promise">
     <div class="container">
-      <p class="eyebrow">🎯 StartOps Promise</p>
-      <h2>How we work with you</h2>
+
+      <p class="eyebrow">
+        🎯 StartOps Promise
+      </p>
+
+      <h2>
+        How we work with you
+      </h2>
+
       <ul>
         <li>Start with an idea.</li>
         <li>Build what you need.</li>
@@ -703,90 +1236,191 @@
         <li>Improve as you learn.</li>
         <li>Grow with better systems.</li>
       </ul>
+
     </div>
   </section>
 
   <!-- ================= FOOTER ================= -->
+
   <footer>
     <div class="container">
+
       <div class="disclaimer">
-        <h4>Affiliate Disclaimer</h4>
-        <p>StartOps is powered by CathiesNest Digital and is an independent website. StartOps is not owned, operated, sponsored, or endorsed by Alison.</p>
-        <p>Some links on this website may direct you to Alison through an affiliate link belonging to the site owner, who is a registered Alison Affiliate. The site owner may earn a commission from qualifying purchases or actions at no additional cost to you.</p>
-        <p>This is a paid referral arrangement only and does not constitute an endorsement by Alison or a partnership, agency, or employment relationship between StartOps and Alison.</p>
-        <p>Participation in any external course, program, or assessment does not guarantee employment, income, career advancement, or any particular outcome.</p>
+
+        <h4>
+          Affiliate Disclaimer
+        </h4>
+
+        <p>
+          StartOps is powered by CathiesNest Digital and is an independent website. StartOps is not owned, operated, sponsored, or endorsed by Alison.
+        </p>
+
+        <p>
+          Some links on this website may direct you to Alison through an affiliate link belonging to the site owner, who is a registered Alison Affiliate. The site owner may earn a commission from qualifying purchases or actions at no additional cost to you.
+        </p>
+
+        <p>
+          This is a paid referral arrangement only and does not constitute an endorsement by Alison or a partnership, agency, or employment relationship between StartOps and Alison.
+        </p>
+
+        <p>
+          Participation in any external course, program, or assessment does not guarantee employment, income, career advancement, or any particular outcome.
+        </p>
+
       </div>
 
       <div class="foot-bottom">
-        <span><strong>StartOps</strong> — Build. Test. Improve. Grow.</span>
-        <span>Powered by CathiesNest Digital · © <span id="year"></span></span>
+
+        <span>
+          <strong>StartOps</strong> — Build. Test. Improve. Grow.
+        </span>
+
+        <span>
+          Powered by CathiesNest Digital · ©
+          <span id="year"></span>
+        </span>
+
       </div>
+
     </div>
   </footer>
 
-  <a href="#top" class="to-top" id="toTop" aria-label="Back to top">🚀</a>
+  <!-- BACK TO TOP -->
+
+  <a
+    href="#top"
+    class="to-top"
+    id="toTop"
+    aria-label="Back to top"
+  >
+    🚀
+  </a>
 
   <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
+
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
 
     const toTop = document.getElementById("toTop");
 
     window.addEventListener("scroll", () => {
-      toTop.classList.toggle("show", window.scrollY > 500);
+      toTop.classList.toggle(
+        "show",
+        window.scrollY > 500
+      );
     });
 
     /* ---------- WHAT WE BUILD CAROUSEL ---------- */
-    const buildCards = document.getElementById("buildCards");
-    const carouselPrev = document.getElementById("carouselPrev");
-    const carouselNext = document.getElementById("carouselNext");
+
+    const buildCards =
+      document.getElementById("buildCards");
+
+    const carouselPrev =
+      document.getElementById("carouselPrev");
+
+    const carouselNext =
+      document.getElementById("carouselNext");
 
     let carouselIndex = 0;
 
     function getCardsPerView() {
-      if (window.innerWidth <= 760) return 1;
-      if (window.innerWidth <= 900) return 2;
+
+      if (window.innerWidth <= 760) {
+        return 1;
+      }
+
+      if (window.innerWidth <= 900) {
+        return 2;
+      }
+
       return 3;
     }
 
     function updateCarousel() {
-      const cards = buildCards.querySelectorAll(".card");
-      const cardsPerView = getCardsPerView();
-      const maxIndex = Math.max(0, cards.length - cardsPerView);
 
-      carouselIndex = Math.min(carouselIndex, maxIndex);
+      const cards =
+        buildCards.querySelectorAll(".card");
 
-      const cardWidth = cards[0].getBoundingClientRect().width;
+      const cardsPerView =
+        getCardsPerView();
+
+      const maxIndex =
+        Math.max(
+          0,
+          cards.length - cardsPerView
+        );
+
+      carouselIndex =
+        Math.min(
+          carouselIndex,
+          maxIndex
+        );
+
+      const cardWidth =
+        cards[0].getBoundingClientRect().width;
+
       const gap = 20;
-      const moveAmount = cardWidth + gap;
+
+      const moveAmount =
+        cardWidth + gap;
 
       buildCards.style.transform =
         `translateX(-${carouselIndex * moveAmount}px)`;
 
-      carouselPrev.disabled = carouselIndex === 0;
-      carouselNext.disabled = carouselIndex >= maxIndex;
+      carouselPrev.disabled =
+        carouselIndex === 0;
+
+      carouselNext.disabled =
+        carouselIndex >= maxIndex;
     }
 
-    carouselNext.addEventListener("click", () => {
-      const cards = buildCards.querySelectorAll(".card");
-      const cardsPerView = getCardsPerView();
-      const maxIndex = Math.max(0, cards.length - cardsPerView);
+    carouselNext.addEventListener(
+      "click",
+      () => {
 
-      if (carouselIndex < maxIndex) {
-        carouselIndex++;
-        updateCarousel();
+        const cards =
+          buildCards.querySelectorAll(".card");
+
+        const cardsPerView =
+          getCardsPerView();
+
+        const maxIndex =
+          Math.max(
+            0,
+            cards.length - cardsPerView
+          );
+
+        if (carouselIndex < maxIndex) {
+
+          carouselIndex++;
+
+          updateCarousel();
+        }
       }
-    });
+    );
 
-    carouselPrev.addEventListener("click", () => {
-      if (carouselIndex > 0) {
-        carouselIndex--;
-        updateCarousel();
+    carouselPrev.addEventListener(
+      "click",
+      () => {
+
+        if (carouselIndex > 0) {
+
+          carouselIndex--;
+
+          updateCarousel();
+        }
       }
-    });
+    );
 
-    window.addEventListener("resize", updateCarousel);
+    window.addEventListener(
+      "resize",
+      updateCarousel
+    );
 
     updateCarousel();
+
   </script>
+
 </body>
 </html>
+```
