@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StartOps — Build. Test. Improve. Grow.</title>
+  <meta name="description" content="StartOps helps startups build the digital tools and systems they need to launch, operate, and grow. Powered by CathiesNest Digital." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23b9c9d3'/%3E%3Cpath d='M44 12C30 14 20 26 18 40l8 6c14-2 26-12 28-30z' fill='none' stroke='%232f7f86' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='38' cy='26' r='4' fill='%23c9a45c'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --navy: #17364d;
+      --navy-soft: #2b4a60;
+      --teal: #2f7f86;
+      --teal-dark: #256a71;
+      --gold: #c9a45c;
+      --sky: #b9c9d3;
+      --sky-light: #dfe6e8;
+      --cream: #f1ece0;
+      --white: #ffffff;
+      --radius: 18px;
+      --shadow: 0 10px 30px rgba(23, 54, 77, 0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+      color: var(--navy);
+      background: var(--cream);
+      line-height: 1.6;
+    }
+
+    a { color: var(--teal-dark); }
+    img, svg { max-width: 100%; }
+
+    .container { width: min(1100px, 92%); margin-inline: auto; }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 60px 0;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 20% 15%, rgba(255,255,255,.55), transparent 55%),
+        radial-gradient(ellipse at 80% 30%, rgba(160,184,198,.65), transparent 60%),
+        radial-gradient(ellipse at 30% 95%, rgba(214,190,140,.55), transparent 55%),
+        linear-gradient(180deg, #a9bdca 0%, #c9d4d9 55%, #e6e0cf 100%);
+    }
+    /* soft "grain" sparkle like the reference image */
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(rgba(255,255,255,.55) 1px, transparent 1.4px),
+        radial-gradient(rgba(201,164,92,.45) 1px, transparent 1.4px);
+      background-size: 38px 38px, 61px 61px;
+      background-position: 0 0, 17px 23px;
+      opacity: .35;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      display: grid;
+      grid-template-columns: auto 1px 1fr;
+      align-items: center;
+      gap: clamp(24px, 5vw, 64px);
+    }
+
+    /* Clickable rocket */
+    .rocket-link {
+      display: block;
+      width: clamp(150px, 22vw, 250px);
+      border-radius: 50%;
+      transition: transform .35s ease, filter .35s ease;
+      outline-offset: 8px;
+    }
+    .rocket-link:hover,
+    .rocket-link:focus-visible {
+      transform: translateY(-8px) rotate(-3deg) scale(1.04);
+      filter: drop-shadow(0 14px 18px rgba(23,54,77,.28));
+    }
+    .rocket-link:active { transform: translateY(-2px) scale(.98); }
+    .rocket-link svg { width: 100%; height: auto; display: block; }
+    .rocket-hint {
+      display: block; text-align: center; margin-top: 10px;
+      font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
+      color: var(--navy-soft); opacity: .8;
+    }
+
+    .divider { width: 1px; align-self: stretch; background: var(--navy); opacity: .75; min-height: 220px; }
+
+    .brand h1 {
+      font-family: "Fraunces", Georgia, serif;
+      font-weight: 700;
+      font-size: clamp(3rem, 8vw, 5.4rem);
+      line-height: 1;
+      letter-spacing: -.01em;
+      color: var(--navy);
+    }
+    .tagline {
+      margin-top: 18px;
+      font-size: clamp(1.15rem, 2.6vw, 1.7rem);
+      font-weight: 500;
+      color: var(--navy);
+    }
+    .subline {
+      margin-top: 22px;
+      font-size: clamp(.95rem, 1.8vw, 1.15rem);
+      color: var(--navy);
+    }
+    .rule { border: 0; height: 1.5px; background: var(--navy); margin: 14px 0 14px; max-width: 540px; }
+    .powered { font-size: .95rem; color: var(--navy-soft); }
+    .powered strong { color: var(--navy); }
+
+    .hero-cta { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; text-decoration: none;
+      padding: 12px 22px; border-radius: 999px;
+      font-weight: 600; font-size: .95rem;
+      transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
+    }
+    .btn-primary { background: var(--navy); color: var(--white); }
+    .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
+    .btn-ghost { border: 1.5px solid var(--navy); color: var(--navy); }
+    .btn-ghost:hover { background: rgba(255,255,255,.55); transform: translateY(-2px); }
+
+    /* ---------- SECTIONS ---------- */
+    section { padding: 80px 0; }
+    .eyebrow {
+      font-size: .8rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--teal); font-weight: 600; margin-bottom: 10px;
+    }
+    h2 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      line-height: 1.15; margin-bottom: 14px;
+    }
+    .lead { max-width: 680px; color: var(--navy-soft); font-size: 1.08rem; }
+
+    .about { background: var(--cream); text-align: center; }
+    .about .lead { margin-inline: auto; }
+
+    /* Cards */
+    .cards {
+      margin-top: 40px;
+      display: grid; gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 26px;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--teal);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .card:nth-child(even) { border-top-color: var(--gold); }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(23,54,77,.18); }
+    .card .icon { font-size: 1.8rem; margin-bottom: 10px; }
+    .card h3 { font-size: 1.1rem; margin-bottom: 6px; }
+    .card p { font-size: .95rem; color: var(--navy-soft); }
+
+    .build { background: linear-gradient(180deg, var(--sky-light), var(--cream)); }
+
+    /* Resources */
+    .resources { background: var(--cream); }
+    .res-grid {
+      margin-top: 36px; display: grid; gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    }
+    .res {
+      display: flex; flex-direction: column; gap: 8px;
+      background: var(--white); border-radius: var(--radius);
+      padding: 26px; text-decoration: none; color: var(--navy);
+      box-shadow: var(--shadow);
+      border-left: 5px solid var(--teal);
+      transition: transform .25s ease, border-color .25s ease;
+    }
+    .res:hover { transform: translateY(-4px); border-left-color: var(--gold); }
+    .res h3 { font-size: 1.15rem; }
+    .res p { color: var(--navy-soft); font-size: .96rem; }
+    .res .go { margin-top: auto; font-weight: 600; color: var(--teal-dark); font-size: .92rem; }
+
+    .upskill-title { margin: 48px 0 6px; font-size: 1.3rem; font-family: "Fraunces", Georgia, serif; }
+    .upskill-sub { color: var(--navy-soft); max-width: 640px; }
+
+    /* Promise */
+    .promise {
+      background: var(--navy); color: var(--white); text-align: center;
+    }
+    .promise .eyebrow { color: var(--gold); }
+    .promise ul { list-style: none; margin-top: 26px; display: grid; gap: 10px; }
+    .promise li {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: clamp(1.15rem, 2.8vw, 1.6rem);
+    }
+    .promise li:nth-child(odd) { color: var(--sky); }
+    .promise li:last-child { color: var(--gold); }
+
+    /* Footer */
+    footer { background: #0f2638; color: #c3d0d8; padding: 48px 0 36px; font-size: .88rem; }
+    footer h4 { color: var(--white); margin-bottom: 10px; font-size: .95rem; }
+    .disclaimer { max-width: 900px; display: grid; gap: 8px; }
+    .foot-bottom { margin-top: 28px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.15); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .foot-bottom strong { color: var(--white); }
+
+    /* Back-to-top rocket */
+    .to-top {
+      position: fixed; right: 18px; bottom: 18px; z-index: 50;
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--navy); color: var(--white);
+      display: grid; place-items: center; text-decoration: none; font-size: 1.3rem;
+      box-shadow: var(--shadow); opacity: 0; pointer-events: none;
+      transition: opacity .3s ease, transform .2s ease;
+    }
+    .to-top.show { opacity: 1; pointer-events: auto; }
+    .to-top:hover { transform: translateY(-3px); background: var(--teal-dark); }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 760px) {
+      .hero { padding: 48px 0; }
+      .hero-inner { grid-template-columns: 1fr; justify-items: center; text-align: center; }
+      .divider { width: 70%; height: 1px; min-height: 0; align-self: auto; }
+      .rule { margin-inline: auto; }
+      .hero-cta { justify-content: center; }
+      section { padding: 60px 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <div class="container hero-inner">
+
+      <!-- CLICKABLE ROCKET ICON -->
+      <div>
+        <a class="rocket-link" href="#what-we-build" aria-label="StartOps rocket — explore what we build" title="Click the rocket to explore">
+          <svg viewBox="0 0 240 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <!-- rocket body (teal outline) -->
+              <path d="M195 28C140 30 88 66 66 126l24 30c62-14 104-62 105-128z" stroke="#2f7f86" stroke-width="7"/>
+              <!-- inner fin curves -->
+              <path d="M66 126c-22 4-38 16-44 34 18 4 32 0 42-8" stroke="#2f7f86" stroke-width="7"/>
+              <path d="M90 156c-4 22-16 38-34 44-4-18 0-32 8-42" stroke="#2f7f86" stroke-width="7"/>
+              <!-- inner circuit lines -->
+              <path d="M96 110c18-30 44-52 78-62" stroke="#2f7f86" stroke-width="5"/>
+              <path d="M122 140c20-14 38-34 48-58" stroke="#2f7f86" stroke-width="5"/>
+              <!-- gold arc + flame streaks -->
+              <path d="M150 38c26 4 42 20 44 44" stroke="#c9a45c" stroke-width="6"/>
+              <path d="M62 150l-26 30" stroke="#c9a45c" stroke-width="6"/>
+              <path d="M80 164l-24 40" stroke="#c9a45c" stroke-width="6"/>
+              <path d="M102 172l-16 46" stroke="#c9a45c" stroke-width="6"/>
+            </g>
+            <!-- network nodes -->
+            <circle cx="66" cy="126" r="9" fill="#2f7f86"/>
+            <circle cx="140" cy="95" r="9" fill="#2f7f86"/>
+            <circle cx="140" cy="95" r="4" fill="#c9a45c"/>
+            <circle cx="108" cy="200" r="10" fill="#2f7f86"/>
+            <circle cx="108" cy="200" r="4" fill="#dfe6e8"/>
+          </svg>
+        </a>
+        <span class="rocket-hint">Tap the rocket</span>
+      </div>
+
+      <div class="divider" aria-hidden="true"></div>
+
+      <div class="brand">
+        <h1>StartOps</h1>
+        <p class="tagline">Build. Test. Improve. Grow.</p>
+        <p class="subline">Startup Operations · Admin Tools · Digital Systems</p>
+        <hr class="rule" />
+        <p class="powered">Powered by <strong>CathiesNest Digital</strong></p>
+
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#what-we-build">What We Build</a>
+          <a class="btn btn-ghost" href="#resources">Free Resources</a>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="about" id="about">
+    <div class="container">
+      <p class="eyebrow">Digital solutions for startups &amp; growing businesses</p>
+      <h2>Practical digital solutions, built around you.</h2>
+      <p class="lead">StartOps helps startups build the digital tools and systems they need to launch, operate, and grow.</p>
+    </div>
+  </section>
+
+  <!-- ================= WHAT WE BUILD ================= -->
+  <section class="build" id="what-we-build">
+    <div class="container">
+      <p class="eyebrow">🛠️ What We Build</p>
+      <h2>Tools and systems that keep your startup moving.</h2>
+
+      <div class="cards">
+        <article class="card">
+          <div class="icon">🖥️</div>
+          <h3>Front-End Tools</h3>
+          <p>Dashboards, portals, trackers &amp; admin tools.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🔄</div>
+          <h3>Business Funnels</h3>
+          <p>Landing pages, lead capture, qualification &amp; conversion systems.</p>
+        </article>
+        <article class="card">
+          <div class="icon">📋</div>
+          <h3>Digital Products</h3>
+          <p>Templates, SOPs, trackers &amp; business resources.</p>
+        </article>
+        <article class="card">
+          <div class="icon">⚙️</div>
+          <h3>Custom Business Systems</h3>
+          <p>Workflows, forms, records &amp; internal tools.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🤖</div>
+          <h3>AI-Enabled Tools</h3>
+          <p>Practical AI features that reduce repetitive work.</p>
+        </article>
+        <article class="card">
+          <div class="icon">📱</div>
+          <h3>Device-Friendly</h3>
+          <p>Responsive on mobile, tablet, laptop &amp; desktop.</p>
+        </article>
+        <article class="card">
+          <div class="icon">🛠️</div>
+          <h3>Custom Solutions</h3>
+          <p>Built around the startup's actual needs.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESOURCES ================= -->
+  <section class="resources" id="resources">
+    <div class="container">
+      <p class="eyebrow">🌱 Resources</p>
+      <h2>Helpful spaces to keep you moving.</h2>
+
+      <div class="res-grid">
+        <a class="res" href="https://cathiesnest.github.io/tabing-guhit-3.0/" target="_blank" rel="noopener">
+          <h3>Find Your Niche</h3>
+          <p>Discover a clearer direction for your skills, work or next move.</p>
+          <span class="go">Open →</span>
+        </a>
+        <a class="res" href="https://cathiesnest.github.io/money-matters/#top" target="_blank" rel="noopener">
+          <h3>Money Matters</h3>
+          <p>A practical space for better money decisions and your next financial move.</p>
+          <span class="go">Open →</span>
+        </a>
+      </div>
+
+      <h3 class="upskill-title">Learn &amp; Upskill — Alison</h3>
+      <p class="upskill-sub">Explore courses and skills that can help you keep learning and growing.</p>
+
+      <div class="res-grid">
+        <a class="res" href="https://alison.com/courses/business?utm_source=alison_user&utm_medium=affiliate&utm_campaign=42404117" target="_blank" rel="sponsored noopener">
+          <h3>Business Courses</h3>
+          <p>Build practical business knowledge at your own pace.</p>
+          <span class="go">Browse courses →</span>
+        </a>
+        <a class="res" href="https://alison.com/courses/management?utm_source=alison_user&utm_medium=affiliate&utm_campaign=42404117" target="_blank" rel="sponsored noopener">
+          <h3>Management Courses</h3>
+          <p>Grow your leadership and team-management skills.</p>
+          <span class="go">Browse courses →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PROMISE ================= -->
+  <section class="promise" id="promise">
+    <div class="container">
+      <p class="eyebrow">🎯 StartOps Promise</p>
+      <h2>How we work with you</h2>
+      <ul>
+        <li>Start with an idea.</li>
+        <li>Build what you need.</li>
+        <li>Test what works.</li>
+        <li>Improve as you learn.</li>
+        <li>Grow with better systems.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="container">
+      <div class="disclaimer">
+        <h4>Affiliate Disclaimer</h4>
+        <p>StartOps is powered by CathiesNest Digital and is an independent website. StartOps is not owned, operated, sponsored, or endorsed by Alison.</p>
+        <p>Some links on this website may direct you to Alison through an affiliate link belonging to the site owner, who is a registered Alison Affiliate. The site owner may earn a commission from qualifying purchases or actions at no additional cost to you.</p>
+        <p>This is a paid referral arrangement only and does not constitute an endorsement by Alison or a partnership, agency, or employment relationship between StartOps and Alison.</p>
+        <p>Participation in any external course, program, or assessment does not guarantee employment, income, career advancement, or any particular outcome.</p>
+      </div>
+      <div class="foot-bottom">
+        <span><strong>StartOps</strong> — Build. Test. Improve. Grow.</span>
+        <span>Powered by CathiesNest Digital · © <span id="year"></span></span>
+      </div>
+    </div>
+  </footer>
+
+  <a href="#top" class="to-top" id="toTop" aria-label="Back to top">🚀</a>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const toTop = document.getElementById("toTop");
+    window.addEventListener("scroll", () => {
+      toTop.classList.toggle("show", window.scrollY > 500);
+    });
+  </script>
+</body>
+</html>
