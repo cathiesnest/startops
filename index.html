@@ -1194,12 +1194,26 @@
           <a
             class="btn btn-primary"
             href="https://cathiesnest.github.io/startops/"
-            target="_blank"
-            rel="noopener"
+            id="saveShareBtn"
             style="display:block; text-align:center; margin-top:16px;"
           >
             🔖 Save &amp; Share
           </a>
+
+          <p
+            id="saveShareConfirmation"
+            style="
+              display:none;
+              margin-top:12px;
+              text-align:center;
+              font-weight:600;
+              color:var(--teal-dark);
+            "
+            role="status"
+            aria-live="polite"
+          >
+            🚀➤ <strong>Link Copied Successfully!</strong> ✨ 🎉
+          </p>
 
         </div>
 
@@ -1660,6 +1674,59 @@
 
         disclaimerIcon.textContent =
           isExpanded ? "➤" : "▼";
+
+      }
+    );
+
+
+    /* ---------- SAVE & SHARE ---------- */
+
+    const saveShareBtn =
+      document.getElementById("saveShareBtn");
+
+    const saveShareConfirmation =
+      document.getElementById("saveShareConfirmation");
+
+    saveShareBtn.addEventListener(
+      "click",
+      async (event) => {
+
+        event.preventDefault();
+
+        const startOpsLink =
+          "https://cathiesnest.github.io/startops/";
+
+        try {
+
+          await navigator.clipboard.writeText(startOpsLink);
+
+        } catch (error) {
+
+          const tempInput =
+            document.createElement("input");
+
+          tempInput.value = startOpsLink;
+          document.body.appendChild(tempInput);
+
+          tempInput.select();
+          tempInput.setSelectionRange(0, 99999);
+
+          document.execCommand("copy");
+
+          tempInput.remove();
+
+        }
+
+        saveShareConfirmation.style.display =
+          "block";
+
+        setTimeout(
+          () => {
+            saveShareConfirmation.style.display =
+              "none";
+          },
+          4000
+        );
 
       }
     );
