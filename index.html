@@ -548,11 +548,62 @@
       box-shadow: var(--shadow);
     }
 
+    .contact-submit:disabled {
+      opacity: .65;
+      cursor: wait;
+      transform: none;
+      box-shadow: none;
+    }
+
     .form-note {
       margin-top: 12px;
       text-align: center;
       font-size: .8rem;
       color: var(--navy-soft);
+    }
+
+    /* ---------- CONTACT SUCCESS ---------- */
+
+    .form-success {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px 10px;
+    }
+
+    .success-rocket {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: var(--sky-light);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 20px rgba(23,54,77,.12);
+    }
+
+    .form-success h3 {
+      font-family: "Fraunces", Georgia, serif;
+      font-size: 1.65rem;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .form-success p {
+      color: var(--navy-soft);
+      max-width: 420px;
+      margin: 0;
+    }
+
+    .form-error {
+      margin-top: 12px;
+      text-align: center;
+      font-size: .85rem;
+      color: #8b3a3a;
     }
 
     /* ---------- PROMISE ---------- */
@@ -606,6 +657,43 @@
       max-width: 900px;
       display: grid;
       gap: 8px;
+    }
+
+    /* ---------- COLLAPSIBLE AFFILIATE DISCLAIMER ---------- */
+
+    .disclaimer-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: fit-content;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: var(--white);
+      font: inherit;
+      font-weight: 600;
+      font-size: .95rem;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .disclaimer-toggle:hover {
+      color: var(--sky);
+    }
+
+    .disclaimer-toggle:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    .disclaimer-content {
+      display: grid;
+      gap: 8px;
+    }
+
+    .disclaimer-content[hidden] {
+      display: none;
     }
 
     .foot-bottom {
@@ -1105,6 +1193,7 @@
 
         <form
           class="contact-form"
+          id="startOpsForm"
           action="https://formspree.io/f/mdeanvyq"
           method="POST"
         >
@@ -1200,6 +1289,7 @@
 
           <button
             class="contact-submit"
+            id="contactSubmit"
             type="submit"
           >
             Send Message
@@ -1208,6 +1298,13 @@
           <p class="form-note">
             Your message will be securely submitted for review.
           </p>
+
+          <p
+            class="form-error"
+            id="formError"
+            role="alert"
+            hidden
+          ></p>
 
         </form>
 
@@ -1246,25 +1343,40 @@
 
       <div class="disclaimer">
 
-        <h4>
+        <button
+          class="disclaimer-toggle"
+          id="disclaimerToggle"
+          type="button"
+          aria-expanded="false"
+          aria-controls="disclaimerContent"
+        >
+          <span id="disclaimerIcon">➤</span>
           Affiliate Disclaimer
-        </h4>
+        </button>
 
-        <p>
-          StartOps is powered by CathiesNest Digital and is an independent website. StartOps is not owned, operated, sponsored, or endorsed by Alison.
-        </p>
+        <div
+          class="disclaimer-content"
+          id="disclaimerContent"
+          hidden
+        >
 
-        <p>
-          Some links on this website may direct you to Alison through an affiliate link belonging to the site owner, who is a registered Alison Affiliate. The site owner may earn a commission from qualifying purchases or actions at no additional cost to you.
-        </p>
+          <p>
+            StartOps is powered by CathiesNest Digital and is an independent website. StartOps is not owned, operated, sponsored, or endorsed by Alison.
+          </p>
 
-        <p>
-          This is a paid referral arrangement only and does not constitute an endorsement by Alison or a partnership, agency, or employment relationship between StartOps and Alison.
-        </p>
+          <p>
+            Some links on this website may direct you to Alison through an affiliate link belonging to the site owner, who is a registered Alison Affiliate. The site owner may earn a commission from qualifying purchases or actions at no additional cost to you.
+          </p>
 
-        <p>
-          Participation in any external course, program, or assessment does not guarantee employment, income, career advancement, or any particular outcome.
-        </p>
+          <p>
+            This is a paid referral arrangement only and does not constitute an endorsement by Alison or a partnership, agency, or employment relationship between StartOps and Alison.
+          </p>
+
+          <p>
+            Participation in any external course, program, or assessment does not guarantee employment, income, career advancement, or any particular outcome.
+          </p>
+
+        </div>
 
       </div>
 
@@ -1418,8 +1530,127 @@
 
     updateCarousel();
 
+
+    /* ---------- FORMSPREE CONTACT SUCCESS ---------- */
+
+    const startOpsForm =
+      document.getElementById("startOpsForm");
+
+    const contactSubmit =
+      document.getElementById("contactSubmit");
+
+    const formError =
+      document.getElementById("formError");
+
+    startOpsForm.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+        formError.hidden = true;
+        formError.textContent = "";
+
+        contactSubmit.disabled = true;
+        contactSubmit.textContent = "Sending...";
+
+        try {
+
+          const response =
+            await fetch(
+              startOpsForm.action,
+              {
+                method: "POST",
+                body: new FormData(startOpsForm),
+                headers: {
+                  "Accept": "application/json"
+                }
+              }
+            );
+
+          if (response.ok) {
+
+            startOpsForm.innerHTML = `
+              <div
+                class="form-success"
+                role="status"
+                aria-live="polite"
+              >
+
+                <div class="success-rocket" aria-hidden="true">
+                  🚀
+                </div>
+
+                <h3>
+                  Message sent — thank you!
+                </h3>
+
+                <p>
+                  We got your message. The StartOps team will get back to you shortly.
+                </p>
+
+              </div>
+            `;
+
+          } else {
+
+            contactSubmit.disabled = false;
+            contactSubmit.textContent = "Send Message";
+
+            formError.hidden = false;
+            formError.textContent =
+              "Something went wrong while sending your message. Please try again.";
+
+          }
+
+        } catch (error) {
+
+          contactSubmit.disabled = false;
+          contactSubmit.textContent = "Send Message";
+
+          formError.hidden = false;
+          formError.textContent =
+            "We couldn't send your message right now. Please try again.";
+
+        }
+
+      }
+    );
+
+
+    /* ---------- COLLAPSIBLE AFFILIATE DISCLAIMER ---------- */
+
+    const disclaimerToggle =
+      document.getElementById("disclaimerToggle");
+
+    const disclaimerContent =
+      document.getElementById("disclaimerContent");
+
+    const disclaimerIcon =
+      document.getElementById("disclaimerIcon");
+
+    disclaimerToggle.addEventListener(
+      "click",
+      () => {
+
+        const isExpanded =
+          disclaimerToggle.getAttribute("aria-expanded") === "true";
+
+        disclaimerToggle.setAttribute(
+          "aria-expanded",
+          String(!isExpanded)
+        );
+
+        disclaimerContent.hidden =
+          isExpanded;
+
+        disclaimerIcon.textContent =
+          isExpanded ? "➤" : "▼";
+
+      }
+    );
+
   </script>
 
 </body>
 </html>
-```
