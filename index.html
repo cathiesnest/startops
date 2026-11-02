@@ -325,6 +325,28 @@
       .contact-body { padding: 0 20px 24px; }
     }
 
+    /* Help Center */
+    .help { padding-top: 0; }
+    .chat-log {
+      border: 1.5px solid #d3dce1; border-radius: 14px; background: #f7f9fa;
+      padding: 14px; height: 300px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+    }
+    .bubble { max-width: 86%; padding: 10px 14px; border-radius: 16px; font-size: .94rem; line-height: 1.5; white-space: pre-line; }
+    .bubble.bot { background: var(--white); border: 1px solid #dbe3e7; align-self: flex-start; border-bottom-left-radius: 4px; }
+    .bubble.me { background: var(--navy); color: var(--white); align-self: flex-end; border-bottom-right-radius: 4px; }
+    .chat-row { display: flex; gap: 10px; margin-top: 12px; }
+    .chat-row input { flex: 1; padding: 12px 14px; font: inherit; color: var(--navy); border: 1.5px solid #c8d3d9; border-radius: 999px; background: var(--white); }
+    .chat-row input:focus { outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(47,127,134,.18); }
+    .chat-row button { flex: 0 0 auto; border: 0; cursor: pointer; font: inherit; font-weight: 600; padding: 0 22px; border-radius: 999px; background: var(--navy); color: var(--white); }
+    .chat-row button:hover { background: var(--teal-dark); }
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .chip { font: inherit; font-size: .85rem; cursor: pointer; padding: 6px 12px; border-radius: 999px; border: 1.5px solid var(--navy); background: transparent; color: var(--navy); }
+    .chip:hover { background: var(--navy); color: var(--white); }
+    .fwd { margin-top: 14px; padding: 16px; border-radius: 14px; background: var(--sky-light); border: 1.5px dashed var(--teal); display: grid; gap: 12px; }
+    .help-note { font-size: .82rem; color: var(--navy-soft); margin-top: 10px; }
+    .copy-msg { color: var(--teal-dark); font-weight: 600; font-size: .92rem; margin-top: 6px; }
+    .ok-msg { color: var(--teal-dark) !important; font-weight: 600; }
+
     /* Back-to-top rocket */
     .to-top {
       position: fixed; right: 18px; bottom: 18px; z-index: 50;
@@ -630,6 +652,128 @@
     </div>
   </section>
 
+  <!-- ================= HELP CENTER ================= -->
+  <section class="contact help" id="help-section">
+    <div class="container">
+      <details class="contact-box" id="help">
+        <summary>
+          <span>
+            <span class="eyebrow">💬 Help Center</span>
+            <h2>Help Center for Clients</h2>
+            <span class="sub">Have a concern or a question? We're happy to help. Tap to open.</span>
+          </span>
+          <span class="arrow-circle" aria-hidden="true">▾</span>
+        </summary>
+
+        <div class="contact-body">
+          <div class="field">
+            <label for="h-type">How can we help you?</label>
+            <select id="h-type">
+              <option value="" disabled selected>Choose an option</option>
+              <option value="ref">I have a reference number</option>
+              <option value="general">I have a general inquiry</option>
+              <option value="direct">I'd rather message your team directly</option>
+            </select>
+          </div>
+
+          <!-- PATH 3: direct message -> ticket -->
+          <form id="directForm" class="form-grid" hidden style="margin-top:16px;">
+            <p class="help-note" style="margin:0;">No worries. Drop us a quick note and we'll take it from here. You'll get a ticket number right away.</p>
+            <div class="hp" aria-hidden="true">
+              <label>Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <div class="field">
+              <label for="d-name">Name</label>
+              <input id="d-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="d-email">Email address</label>
+              <input id="d-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="d-msg">Your message</label>
+              <textarea id="d-msg" name="message" placeholder="What's on your mind?" required></textarea>
+            </div>
+            <p class="form-error" id="directError" role="alert" hidden></p>
+            <button type="submit" class="send-btn" id="directBtn">Send to StartOps team</button>
+          </form>
+
+          <!-- PATH 1: reference number concern -->
+          <form id="helpRefForm" class="form-grid" hidden style="margin-top:16px;">
+            <div class="hp" aria-hidden="true">
+              <label>Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <div class="field">
+              <label for="h-ref">Reference number</label>
+              <input id="h-ref" name="ref" type="text" placeholder="Example: SO-261101-K7M2P" autocomplete="off" required />
+            </div>
+            <div class="field">
+              <label for="h-name">Name</label>
+              <input id="h-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="h-email">Email address</label>
+              <input id="h-email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="h-concern">Your concern</label>
+              <textarea id="h-concern" name="concern" placeholder="Tell us what you need help with." required></textarea>
+            </div>
+            <p class="form-error" id="helpRefError" role="alert" hidden></p>
+            <button type="submit" class="send-btn" id="helpRefBtn">Send to StartOps team</button>
+          </form>
+
+          <!-- PATH 2: general inquiry (assistant) -->
+          <div id="helpGeneral" hidden style="margin-top:16px;">
+            <div class="chat-log" id="chatLog" aria-live="polite"></div>
+            <div class="chips" id="chatChips"></div>
+            <form class="chat-row" id="chatForm">
+              <input id="chatInput" type="text" placeholder="Type your question here…" autocomplete="off" aria-label="Your question" />
+              <button type="submit">Ask</button>
+            </form>
+
+            <form class="fwd" id="fwdForm" hidden>
+              <div class="hp" aria-hidden="true">
+                <label>Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+              </div>
+              <strong>Send your question to the StartOps team</strong>
+              <div class="field"><label for="fwd-name">Name</label><input id="fwd-name" name="name" type="text" autocomplete="name" required /></div>
+              <div class="field"><label for="fwd-email">Email address</label><input id="fwd-email" name="email" type="email" autocomplete="email" required /></div>
+              <p class="form-error" id="fwdError" role="alert" hidden></p>
+              <button type="submit" class="send-btn" id="fwdBtn">Send to StartOps team</button>
+            </form>
+            <p class="help-note">This assistant answers common questions about StartOps. It cannot look up the status of a request. For that, choose “I have a reference number”.</p>
+          </div>
+
+          <!-- CONFIRMATION -->
+          <div class="done" id="helpDone" hidden aria-live="polite">
+            <h3>Thank you. Your message was sent!</h3>
+            <p class="note" id="helpDoneNote">The StartOps team has received it and a copy was emailed to you. We aim to reply within 2–3 business days.</p>
+            <div class="ref-box">
+              <span class="ref-code" id="helpRefOut"></span>
+              <button type="button" class="copy-btn" id="helpCopy">Copy</button>
+            </div>
+            <p><button type="button" class="again-btn" id="helpAgain">Back to Help Center</button></p>
+          </div>
+
+          <!-- TICKET CONFIRMATION -->
+          <div class="done" id="ticketDone" hidden aria-live="polite">
+            <h3>Got it. Your message is in! 🎫</h3>
+            <p class="note">Your ticket number is below. It shows the StartOps team is working on your concern, so please keep it for any follow-up.</p>
+            <div class="ref-box">
+              <span class="ref-code" id="ticketOut"></span>
+              <button type="button" class="copy-btn" id="ticketCopy">Copy</button>
+            </div>
+            <p class="copy-msg" id="ticketCopyMsg" role="status" hidden>✓ Ticket number copied</p>
+            <p style="margin-top:14px;"><button type="button" class="copy-btn" id="ticketEmailBtn">Send this ticket number to my email</button></p>
+            <p class="form-error" id="ticketEmailMsg" role="status" hidden></p>
+            <p style="margin-top:14px;"><button type="button" class="again-btn" id="ticketAgain">Back to Help Center</button></p>
+          </div>
+        </div>
+      </details>
+    </div>
+  </section>
+
   <!-- ================= FOOTER ================= -->
   <footer>
     <div class="container">
@@ -869,6 +1013,347 @@
         form.reset();
         done.hidden = true;
         form.hidden = false;
+      });
+    })();
+
+    // Help Center
+    (function () {
+      const ENDPOINT = "https://formsubmit.co/ajax/cathiesnest@gmail.com";
+      const MERCHANT = "cathiesnest@gmail.com";
+      // Optional: paste the address of a real AI service here later (see notes). Leave empty to use the built-in answers.
+      const AI_ENDPOINT = "";
+
+      const box = document.getElementById("help");
+      if (location.hash === "#help-section" || location.hash === "#help") box.open = true;
+
+      const typeSel = document.getElementById("h-type");
+      const refForm = document.getElementById("helpRefForm");
+      const directForm = document.getElementById("directForm");
+      const general = document.getElementById("helpGeneral");
+      const done = document.getElementById("helpDone");
+      const doneNote = document.getElementById("helpDoneNote");
+      const refOut = document.getElementById("helpRefOut");
+
+      function show(which) {
+        refForm.hidden = which !== "ref";
+        general.hidden = which !== "general";
+        directForm.hidden = which !== "direct";
+        if (which === "general" && !log.children.length) greet();
+      }
+      typeSel.addEventListener("change", () => show(typeSel.value));
+
+      function newRef(prefix) {
+        const d = new Date(), pad = (n) => String(n).padStart(2, "0");
+        const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+        const r = new Uint32Array(5); crypto.getRandomValues(r);
+        let c = ""; r.forEach((v) => (c += chars[v % chars.length]));
+        return prefix + "-" + String(d.getFullYear()).slice(2) + pad(d.getMonth() + 1) + pad(d.getDate()) + "-" + c;
+      }
+
+      async function send(payload) {
+        const res = await fetch(ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        let data = {}; try { data = await res.json(); } catch (_) {}
+        if (!res.ok || !(data.success === true || data.success === "true")) {
+          console.error("StartOps help — server reply:", res.status, data);
+          throw new Error("send failed");
+        }
+      }
+
+      function finish(refText, note) {
+        refForm.hidden = true; general.hidden = true; directForm.hidden = true; typeSel.parentElement.hidden = true;
+        refOut.textContent = refText;
+        if (note) doneNote.textContent = note;
+        done.hidden = false;
+      }
+
+      // ---- Path 1: concern about an existing reference number ----
+      refForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const err = document.getElementById("helpRefError"), btn = document.getElementById("helpRefBtn");
+        err.hidden = true;
+        if (refForm.elements["_honey"].value) return;
+        const ref = refForm.elements["ref"].value.trim().toUpperCase();
+        if (!/^(SO|HC|TK)-\d{6}-[A-Z0-9]{5}$/.test(ref)) {
+          err.textContent = "That number doesn't look right. It should look like SO-261101-K7M2P or TK-261101-K7M2P. Please copy it from your confirmation or email.";
+          err.hidden = false; return;
+        }
+        const name = refForm.elements["name"].value.trim();
+        const email = refForm.elements["email"].value.trim();
+        const payload = {
+          _subject: "[" + ref + "] Help Center concern",
+          _template: "table", _captcha: "false",
+          "Type": "Help Center: concern about an existing reference number",
+          "Reference Number": ref, name: name, email: email,
+          "Concern": refForm.elements["concern"].value.trim(),
+          "Sent on": new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: "long" })
+        };
+        if (email.toLowerCase() !== MERCHANT) payload._cc = email;
+        btn.disabled = true;
+        try {
+          await send(payload);
+          finish(ref, "The StartOps team has received your concern about this reference number, and a copy was emailed to you. We aim to reply within 2–3 business days.");
+        } catch (_) {
+          err.textContent = "Sorry, your message could not be sent. Please try again in a moment, or email " + MERCHANT + " directly.";
+          err.hidden = false;
+        } finally { btn.disabled = false; }
+      });
+
+      // ---- Path 2: general inquiry assistant ----
+      const log = document.getElementById("chatLog");
+      const chatForm = document.getElementById("chatForm");
+      const input = document.getElementById("chatInput");
+      const fwdForm = document.getElementById("fwdForm");
+      let lastQuestion = "";
+      const transcript = [];
+
+      function say(text, who) {
+        const b = document.createElement("div");
+        b.className = "bubble " + who; b.textContent = text;
+        log.appendChild(b); log.scrollTop = log.scrollHeight;
+        transcript.push((who === "me" ? "Client: " : "Assistant: ") + text);
+      }
+
+      const FAQ = [
+        { k: ["what do you do", "what do you offer", "what do you build", "services", "what can you build", "what is startops", "who are you", "about startops", "what is this"],
+          a: "StartOps helps startups and growing businesses build the digital tools and systems they need to launch, operate and grow. That includes front-end tools (dashboards, portals, trackers, admin tools), business funnels, digital products like templates and SOPs, custom business systems, AI-enabled tools, and fully custom solutions." },
+        { k: ["price", "pricing", "cost", "how much", "quote", "rate", "fee", "budget", "afford"],
+          a: "Every project is priced based on what you actually need, so there isn't one fixed price list. You'll get a written quote that spells out the deliverables, price, timeline and included revisions, with no hidden fees. To get one, use the “Contact the StartOps Team” form and pick the service you're interested in." },
+        { k: ["gcash", "gotyme", "go tyme", "payment", "pay", "paying", "bank", "how to pay", "mode of payment"],
+          a: "We accept GCash and GoTyme. No payment is collected on this website. Once a quote is accepted, the StartOps team shares the payment details with you in writing. If you're only inquiring, just choose “No mode of payment yet” on the form." },
+        { k: ["deposit", "down payment", "downpayment", "advance"],
+          a: "A deposit may be required before work begins. If it applies to your project, it'll be stated clearly in your written quote, along with the schedule for the remaining payments." },
+        { k: ["how long", "turnaround", "timeline", "how fast", "when will", "deadline", "delivery", "duration"],
+          a: "The project timeline is set in your written quote, since it depends on the scope. As for replies, we aim to respond to inquiries within 2–3 business days." },
+        { k: ["reply", "respond", "response time", "get back", "hear back", "how soon"],
+          a: "We aim to reply to inquiries within 2–3 business days. If you've already sent something, keep your reference number handy for follow-ups." },
+        { k: ["refund", "money back", "cancel", "cancellation", "stop the project"],
+          a: "You can cancel anytime with written notice. You'd pay for the work completed up to that point, and deposits are non-refundable once work has begun. If we can't deliver what was agreed, we'll correct it or refund the part that wasn't delivered. Ready-made digital products are reviewed case by case if they're materially different from their description." },
+        { k: ["revision", "revisions", "changes", "edit", "adjust", "tweak"],
+          a: "Your written quote states how many revision rounds are included. Extra revisions beyond that may be charged, and anything outside the agreed scope is quoted separately and only done with your approval." },
+        { k: ["own", "ownership", "copyright", "rights", "intellectual property", "portfolio"],
+          a: "After full payment, you own the final deliverables created specifically for you. StartOps keeps ownership of its pre-existing tools, templates, code and know-how, and gives you the right to use them as part of your deliverables. We may show completed work in our portfolio unless you tell us in writing not to." },
+        { k: ["privacy", "data", "confidential", "personal information", "secure", "safe", "private"],
+          a: "We use the details you submit only to respond to your inquiry and deliver the work, and we don't sell them. Both sides agree to keep sensitive project information confidential. The full details are in the Terms & Agreement inside the “Contact the StartOps Team” section." },
+        { k: ["reference number", "reference", "ref number", "ticket", "tracking", "status", "follow up", "follow-up"],
+          a: "Your reference number (it looks like SO-261101-K7M2P) appears on screen after you send the contact form, and it's also in the email copy. For anything about an existing request, choose “I have a reference number” in the dropdown above and send us your concern. Please note I can't look up status myself; the team will reply by email." },
+        { k: ["how to start", "get started", "start a project", "inquire", "inquiry", "contact", "reach", "hire", "work with you", "order"],
+          a: "Easy! Open “Contact the StartOps Team” on this page, fill in your name, email and the service you're interested in, tick the Terms & Agreement box, and press “Send to StartOps team”. You'll get a reference number right away and a copy by email." },
+        { k: ["mobile", "phone", "tablet", "responsive", "device", "laptop", "desktop"],
+          a: "Everything we build is device-friendly, so it works on mobile, tablet, laptop and desktop." },
+        { k: ["ai", "artificial intelligence", "automation", "automate", "chatbot"],
+          a: "Yes! We build practical AI-enabled tools, meaning AI features that reduce repetitive work. If you tell us what slows you down, we can suggest what makes sense for your business." },
+        { k: ["custom", "customize", "tailor", "specific need", "something different"],
+          a: "Absolutely. Custom solutions are built around your startup's actual needs. Tell us what you have in mind in the “Contact the StartOps Team” form and we'll take it from there." },
+        { k: ["template", "sop", "tracker", "digital product", "resources for business"],
+          a: "Our digital products include templates, SOPs, trackers and other business resources. If you're after a specific one, send us an inquiry and mention it in your message." },
+        { k: ["funnel", "landing page", "lead", "conversion"],
+          a: "We build business funnels: landing pages, lead capture, and qualification and conversion systems. Send an inquiry and tell us about your business so we can suggest the right setup." },
+        { k: ["dashboard", "portal", "admin tool", "internal tool", "workflow", "forms"],
+          a: "We build front-end tools such as dashboards, portals, trackers and admin tools, plus custom business systems like workflows, forms, records and internal tools." },
+        { k: ["affiliate", "alison", "courses", "course", "commission"],
+          a: "Some links to Alison courses on this site are affiliate links, meaning the site owner may earn a commission at no extra cost to you. StartOps is independent and isn't owned, sponsored or endorsed by Alison. Taking a course doesn't guarantee any particular outcome. The full disclaimer is at the bottom of the page." },
+        { k: ["niche", "money matters", "free resources", "resources"],
+          a: "In the Resources section you'll find “Find Your Niche” (a clearer direction for your skills, work or next move) and “Money Matters” (a practical space for better money decisions), plus Alison business and management courses." },
+        { k: ["guarantee", "results", "income", "growth", "sales"],
+          a: "We build with care, but we can't guarantee business results such as income, leads or growth. What we can promise is a clear written scope, honest communication and work that matches what we agreed on." },
+        { k: ["terms", "agreement", "policy", "policies", "liability"],
+          a: "The Terms & Agreement is inside the “Contact the StartOps Team” section: tap its arrow to read all 10 points covering quotes, payment, revisions, cancellation, ownership, privacy and more." }
+      ];
+
+      function localAnswer(q) {
+        const s = " " + q.toLowerCase().replace(/[^a-z0-9\s\-]/g, " ").replace(/\s+/g, " ") + " ";
+        if (/^\s*(hi|hello|hey|good (morning|afternoon|evening)|yo)\b/.test(s.trim() + " ") && s.trim().split(" ").length <= 3)
+          return { text: "Hi there! 😊 What would you like to know about StartOps?" };
+        if (/\b(thanks|thank you|salamat)\b/.test(s) && s.trim().split(" ").length <= 5)
+          return { text: "You're very welcome! Is there anything else I can help you with?" };
+        if (/\b(so|hc|tk)-\d{6}-[a-z0-9]{5}\b/.test(s))
+          return { text: "It looks like you have a reference number. For anything about an existing request, please pick “I have a reference number” in the dropdown at the top of this section and send us your concern. The StartOps team will reply by email. I can't look up the status of a request myself." };
+        let best = null, bestScore = 0;
+        for (const item of FAQ) {
+          let score = 0;
+          for (const kw of item.k) {
+            const re = new RegExp("\\b" + kw.replace(/[-\s]+/g, "[-\\s]") + "(s|es)?\\b");
+            if (re.test(s)) score += kw.split(" ").length + (kw.length > 5 ? 1 : 0);
+          }
+          if (score > bestScore) { bestScore = score; best = item; }
+        }
+        if (best && bestScore >= 1) return { text: best.a };
+        return null;
+      }
+
+      async function answer(q) {
+        if (AI_ENDPOINT) {
+          try {
+            const r = await fetch(AI_ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }) });
+            const d = await r.json();
+            if (r.ok && d && d.answer) return { text: String(d.answer) };
+          } catch (_) { /* fall back to built-in answers */ }
+        }
+        return localAnswer(q);
+      }
+
+      function greet() {
+        say("Hi! 👋 I'm the StartOps help assistant. Ask me anything about our services, quotes, payments, revisions or how to get started, and I'll do my best to help.", "bot");
+        const chips = document.getElementById("chatChips");
+        ["What do you offer?", "How much does it cost?", "How do I pay?", "Can I cancel or get a refund?", "How do I get started?"].forEach((t) => {
+          const b = document.createElement("button");
+          b.type = "button"; b.className = "chip"; b.textContent = t;
+          b.addEventListener("click", () => ask(t));
+          chips.appendChild(b);
+        });
+      }
+
+      async function ask(q) {
+        q = q.trim(); if (!q) return;
+        say(q, "me"); lastQuestion = q; input.value = "";
+        const res = await answer(q);
+        if (res) {
+          fwdForm.hidden = true;
+          say(res.text, "bot");
+        } else {
+          say("Thanks for asking! I don't want to guess and give you a wrong answer, so it's best that the StartOps team answers this one personally. You can send your question to them below and they'll reply by email.", "bot");
+          fwdForm.hidden = false;
+          fwdForm.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      }
+
+      chatForm.addEventListener("submit", (e) => { e.preventDefault(); ask(input.value); });
+
+      fwdForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const err = document.getElementById("fwdError"), btn = document.getElementById("fwdBtn");
+        err.hidden = true;
+        if (fwdForm.elements["_honey"].value) return;
+        const ref = newRef("HC");
+        const name = fwdForm.elements["name"].value.trim();
+        const email = fwdForm.elements["email"].value.trim();
+        const payload = {
+          _subject: "[" + ref + "] Help Center question",
+          _template: "table", _captcha: "false",
+          "Type": "Help Center: general inquiry",
+          "Reference Number": ref, name: name, email: email,
+          "Question": lastQuestion,
+          "Conversation": transcript.join("\n"),
+          "Sent on": new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: "long" })
+        };
+        if (email.toLowerCase() !== MERCHANT) payload._cc = email;
+        btn.disabled = true;
+        try {
+          await send(payload);
+          finish(ref, "The StartOps team has received your question, and a copy was emailed to you. We aim to reply within 2–3 business days.");
+        } catch (_) {
+          err.textContent = "Sorry, your message could not be sent. Please try again in a moment, or email " + MERCHANT + " directly.";
+          err.hidden = false;
+        } finally { btn.disabled = false; }
+      });
+
+      // ---- Path 3: direct message -> ticket ----
+      const ticketDone = document.getElementById("ticketDone");
+      const ticketOut = document.getElementById("ticketOut");
+      let ticket = null;
+
+      directForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const err = document.getElementById("directError"), btn = document.getElementById("directBtn");
+        err.hidden = true;
+        if (directForm.elements["_honey"].value) return;
+        const id = newRef("TK");
+        const name = directForm.elements["name"].value.trim();
+        const email = directForm.elements["email"].value.trim();
+        const message = directForm.elements["message"].value.trim();
+        const sentOn = new Date().toLocaleString("en-US", { dateStyle: "full", timeStyle: "long" });
+        const payload = {
+          _subject: "[" + id + "] New support ticket: direct message",
+          _template: "table", _captcha: "false",
+          "Ticket Number": id,
+          "Status": "OPEN: awaiting StartOps reply",
+          "Type": "Help Center: direct message to the team",
+          name: name, email: email,
+          "Message": message,
+          "Sent on": sentOn + " (UTC: " + new Date().toISOString() + ")",
+          "Sent from": location.href.split("#")[0]
+        };
+        btn.disabled = true;
+        try {
+          await send(payload);
+          ticket = { id, name, email, message, sentOn };
+          ticketOut.textContent = id;
+          directForm.hidden = true; typeSel.parentElement.hidden = true;
+          document.getElementById("ticketCopyMsg").hidden = true;
+          const em = document.getElementById("ticketEmailMsg"); em.hidden = true;
+          const eb = document.getElementById("ticketEmailBtn"); eb.disabled = false; eb.textContent = "Send this ticket number to my email";
+          ticketDone.hidden = false;
+        } catch (_) {
+          err.textContent = "Sorry, your message could not be sent. Please try again in a moment, or email " + MERCHANT + " directly.";
+          err.hidden = false;
+        } finally { btn.disabled = false; }
+      });
+
+      document.getElementById("ticketCopy").addEventListener("click", async () => {
+        const b = document.getElementById("ticketCopy"), m = document.getElementById("ticketCopyMsg");
+        let ok = true;
+        try { await navigator.clipboard.writeText(ticketOut.textContent); }
+        catch (_) {
+          try {
+            const r = document.createRange(); r.selectNodeContents(ticketOut);
+            const s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+            ok = document.execCommand("copy"); s.removeAllRanges();
+          } catch (e2) { ok = false; }
+        }
+        m.textContent = ok ? "✓ Ticket number copied" : "Couldn't copy automatically. Please select the number and copy it.";
+        m.hidden = false;
+        b.textContent = ok ? "Copied ✓" : "Copy";
+        setTimeout(() => { b.textContent = "Copy"; }, 2000);
+      });
+
+      document.getElementById("ticketEmailBtn").addEventListener("click", async () => {
+        if (!ticket) return;
+        const b = document.getElementById("ticketEmailBtn"), m = document.getElementById("ticketEmailMsg");
+        m.hidden = true; m.classList.remove("ok-msg"); b.disabled = true; b.textContent = "Sending…";
+        const payload = {
+          _subject: "[" + ticket.id + "] Your StartOps ticket number",
+          _template: "table", _captcha: "false",
+          "Ticket Number": ticket.id,
+          "Status": "OPEN: the StartOps team is working on your concern",
+          "Note": "Please keep this ticket number. It is your reference for any follow-up with the StartOps team.",
+          "Type": "Ticket number emailed to the client at their request",
+          name: ticket.name, email: ticket.email,
+          "Original message": ticket.message,
+          "Ticket created": ticket.sentOn
+        };
+        if (ticket.email.toLowerCase() !== MERCHANT) payload._cc = ticket.email;
+        try {
+          await send(payload);
+          b.textContent = "Sent ✓ Check your inbox";
+          m.textContent = "We emailed your ticket number to " + ticket.email + ". If you don't see it, please check your spam folder.";
+          m.classList.add("ok-msg"); m.hidden = false;
+        } catch (_) {
+          b.disabled = false; b.textContent = "Send this ticket number to my email";
+          m.textContent = "Sorry, we couldn't send that just now. Please tap Copy to save your ticket number, then try again in a moment.";
+          m.hidden = false;
+        }
+      });
+
+      document.getElementById("ticketAgain").addEventListener("click", () => {
+        directForm.reset(); ticket = null;
+        ticketDone.hidden = true; typeSel.parentElement.hidden = false;
+        typeSel.value = ""; show("");
+      });
+
+      document.getElementById("helpCopy").addEventListener("click", async () => {
+        const b = document.getElementById("helpCopy");
+        try { await navigator.clipboard.writeText(refOut.textContent); } catch (_) {}
+        b.textContent = "Copied ✓"; setTimeout(() => (b.textContent = "Copy"), 2000);
+      });
+
+      document.getElementById("helpAgain").addEventListener("click", () => {
+        refForm.reset(); fwdForm.reset(); fwdForm.hidden = true;
+        done.hidden = true; typeSel.parentElement.hidden = false;
+        typeSel.value = ""; show("");
       });
     })();
   </script>
