@@ -289,6 +289,7 @@
       background: var(--white); border: 1.5px solid #c8d3d9; border-radius: 12px;
     }
     .field textarea { min-height: 110px; resize: vertical; }
+    .field-hint { display: block; margin-top: 6px; font-size: .82rem; color: var(--navy-soft); }
     .field input:focus, .field select:focus, .field textarea:focus {
       outline: none; border-color: var(--teal); box-shadow: 0 0 0 3px rgba(47,127,134,.18);
     }
@@ -540,11 +541,11 @@
             <summary>Terms &amp; Agreement <span class="arrow" aria-hidden="true">▾</span></summary>
             <div class="terms-body">
               <p class="updated">Last updated: November 1, 2026</p>
-              <p>These terms apply to every inquiry, quote and project between you (the “Client”) and StartOps, powered by CathiesNest Digital (“StartOps”, “we”). By ticking the box and sending the form, you confirm that you have read and understood them.</p>
+              <p>These terms apply to every inquiry, quote and project between you (the “Client”) and StartOps, powered by CathiesNest Digital (“StartOps”, “we”). By ticking the box and sending the form, you confirm that you have read, fully understood and agree to them.</p>
               <ol>
                 <li><strong>Inquiries.</strong> Sending the form is a request for information, not an order. No work starts and no payment is due until both sides accept a written quote or proposal. We aim to reply within 2–3 business days.</li>
                 <li><strong>Scope &amp; quotes.</strong> Every project is defined in writing: deliverables, price, timeline and included revisions. Anything outside the agreed scope is quoted separately and only done with your approval.</li>
-                <li><strong>Pricing &amp; payment.</strong> Prices are stated in the quote, with no hidden fees. A deposit may be required before work begins, and remaining payments follow the schedule in the quote. Late payment may pause work.</li>
+                <li><strong>Pricing &amp; payment.</strong> Prices are stated in the quote, with no hidden fees. A deposit may be required before work begins, and remaining payments follow the schedule in the quote. Late payment may pause work. Accepted payment methods are GCash and GoTyme; no payment is collected through the website form, and StartOps shares payment details in writing once a quote is accepted.</li>
                 <li><strong>Client responsibilities &amp; revisions.</strong> You agree to provide accurate information, content, access and timely feedback. Delays on your side may move the timeline. The quote states the included revision rounds; extra revisions may be charged.</li>
                 <li><strong>Cancellation &amp; refunds.</strong> You may cancel at any time by written notice. You pay for work completed up to that point, and deposits are non-refundable once work has begun. If we cannot deliver what was agreed, we will correct it or refund the part not delivered. For ready-made digital products, refunds are considered case by case if the product is materially different from its description.</li>
                 <li><strong>Ownership.</strong> After full payment, you own the final deliverables created specifically for you. StartOps keeps ownership of its pre-existing tools, templates, code and know-how, and grants you the right to use them as part of your deliverables. We may show completed work in our portfolio unless you ask us in writing not to.</li>
@@ -588,13 +589,24 @@
             </div>
 
             <div class="field">
+              <label for="f-payment">Mode of payment</label>
+              <select id="f-payment" name="payment" required>
+                <option value="" disabled selected>Select a mode of payment</option>
+                <option>GCash</option>
+                <option>GoTyme</option>
+                <option>No mode of payment yet — I am only inquiring</option>
+              </select>
+              <small class="field-hint">No payment is collected on this form. StartOps will share payment details in writing once a quote is accepted.</small>
+            </div>
+
+            <div class="field">
               <label for="f-message">Message (optional)</label>
               <textarea id="f-message" name="message" placeholder="Tell us a little about what you need."></textarea>
             </div>
 
             <label class="check">
               <input type="checkbox" id="f-terms" name="terms" required />
-              <span>I have read and understood the Terms &amp; Agreement.</span>
+              <span><strong>I confirm that I have read, fully understand, and agree to the Terms &amp; Agreement.</strong></span>
             </label>
 
             <p class="form-error" id="formError" role="alert" hidden></p>
@@ -695,6 +707,67 @@
         return "SO-" + String(d.getFullYear()).slice(2) + pad(d.getMonth() + 1) + pad(d.getDate()) + "-" + code;
       }
 
+      // Draws the "Acceptance Receipt" image (PNG) that is attached to the inquiry email
+      function makeReceipt(info) {
+        return new Promise((resolve, reject) => {
+          const W = 1000, H = 1000;
+          const c = document.createElement("canvas");
+          c.width = W; c.height = H;
+          const g = c.getContext("2d");
+          const NAVY = "#17364d", SOFT = "#2b4a60";
+
+          function wrap(text, x, y, maxW, lh) {
+            const words = String(text).split(" ");
+            let line = "";
+            for (const w of words) {
+              const test = line ? line + " " + w : w;
+              if (g.measureText(test).width > maxW && line) { g.fillText(line, x, y); line = w; y += lh; }
+              else line = test;
+            }
+            g.fillText(line, x, y);
+            return y + lh;
+          }
+
+          const bg = g.createLinearGradient(0, 0, W, H);
+          bg.addColorStop(0, "#a9bdca"); bg.addColorStop(1, "#d8ceb5");
+          g.fillStyle = bg; g.fillRect(0, 0, W, H);
+
+          g.fillStyle = NAVY; g.font = "bold 72px Georgia, 'Times New Roman', serif";
+          g.fillText("StartOps", 60, 120);
+          g.fillStyle = SOFT; g.font = "28px Arial, Helvetica, sans-serif";
+          g.fillText("Terms & Agreement — Acceptance Receipt", 60, 168);
+          g.fillStyle = NAVY; g.fillRect(60, 196, W - 120, 3);
+
+          function field(label, value, y, font) {
+            g.fillStyle = SOFT; g.font = "20px Arial, Helvetica, sans-serif";
+            g.fillText(label.toUpperCase(), 60, y);
+            g.fillStyle = NAVY; g.font = font || "bold 32px Arial, Helvetica, sans-serif";
+            return wrap(value, 60, y + 44, W - 120, 38);
+          }
+          let y = 248;
+          y = field("Reference number", info.ref, y, "bold 46px Consolas, Menlo, monospace") + 14;
+          y = field("Client", info.name + " · " + info.email, y, "bold 28px Arial, Helvetica, sans-serif") + 14;
+          y = field("Service", info.service.split(" (")[0], y) + 14;
+          y = field("Mode of payment", info.payment.indexOf("No mode") === 0 ? "No payment yet (inquiry only)" : info.payment, y) + 14;
+          y = field("Accepted on", info.when, y, "bold 26px Arial, Helvetica, sans-serif") + 20;
+
+          g.fillStyle = "rgba(255,255,255,0.6)";
+          g.beginPath(); g.roundRect ? g.roundRect(60, y, W - 120, 120, 18) : g.rect(60, y, W - 120, 120); g.fill();
+          g.fillStyle = "#2f7f86"; g.fillRect(90, y + 36, 44, 44);
+          g.strokeStyle = "#fff"; g.lineWidth = 6; g.lineCap = "round"; g.lineJoin = "round";
+          g.beginPath(); g.moveTo(100, y + 58); g.lineTo(110, y + 70); g.lineTo(126, y + 46); g.stroke();
+          g.fillStyle = NAVY; g.font = "bold 26px Arial, Helvetica, sans-serif";
+          wrap("I confirm that I have read, fully understand, and agree to the Terms & Agreement.", 156, y + 48, W - 250, 34);
+
+          g.fillStyle = SOFT; g.font = "20px Arial, Helvetica, sans-serif";
+          g.textAlign = "center";
+          g.fillText("Terms version: " + info.version + " · Powered by CathiesNest Digital", W / 2, H - 36);
+          g.textAlign = "left";
+
+          c.toBlob((b) => (b ? resolve(b) : reject(new Error("receipt failed"))), "image/png");
+        });
+      }
+
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         err.hidden = true;
@@ -704,7 +777,11 @@
         const name = form.elements["name"].value.trim();
         const email = form.elements["email"].value.trim();
         const service = form.elements["service"].value;
+        const payment = form.elements["payment"].value;
         const message = form.elements["message"].value.trim();
+        const TERMS_VERSION = "November 1, 2026";
+        const now = new Date();
+        const when = now.toLocaleString("en-US", { dateStyle: "full", timeStyle: "long" });
 
         const payload = {
           _subject: "[" + ref + "] StartOps inquiry — " + service,
@@ -714,25 +791,51 @@
           name: name,
           email: email,
           "Subject / Service": service,
+          "Mode of Payment": payment,
           "Message": message || "(none)",
-          "Terms & Agreement": "Read and understood — accepted on " + new Date().toString()
+          "Acceptance Statement": "The client confirmed: \"I have read, fully understand, and agree to the Terms & Agreement.\" Accepted on " + when + " (UTC: " + now.toISOString() + "). Terms version: " + TERMS_VERSION + "."
         };
+
+        // full text of the terms the client agreed to, one row per point
+        document.querySelectorAll(".terms-body ol li").forEach((li, i) => {
+          const t = li.querySelector("strong");
+          const title = t ? t.textContent.replace(/\.$/, "") : "Term";
+          const body = li.textContent.replace(t ? t.textContent : "", "").trim();
+          payload["Term " + (i + 1) + ": " + title] = body;
+        });
 
         // send the client a copy (skipped when the client uses the merchant's own address)
         if (email.toLowerCase() !== "cathiesnest@gmail.com") payload._cc = email;
 
         btn.disabled = true;
         try {
-          const res = await fetch(ENDPOINT, {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "Accept": "application/json" },
-            body: JSON.stringify(payload)
-          });
+          let sent = false;
           let data = {};
-          try { data = await res.json(); } catch (_) {}
-          if (!res.ok || !(data.success === true || data.success === "true")) {
-            console.error("StartOps form — server reply:", res.status, data);
-            throw new Error((data && data.message) || "send failed");
+
+          // 1) preferred: written record + image receipt attached
+          try {
+            const blob = await makeReceipt({ ref, name, email, service, payment, when, version: TERMS_VERSION });
+            const fd = new FormData();
+            Object.keys(payload).forEach((k) => fd.append(k, payload[k]));
+            fd.append("attachment", blob, "StartOps-Receipt-" + ref + ".png");
+            const r1 = await fetch(ENDPOINT, { method: "POST", headers: { "Accept": "application/json" }, body: fd });
+            try { data = await r1.json(); } catch (_) {}
+            sent = r1.ok && (data.success === true || data.success === "true");
+          } catch (_) { sent = false; }
+
+          // 2) fallback: written record only (no attachment)
+          if (!sent) {
+            const res = await fetch(ENDPOINT, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Accept": "application/json" },
+              body: JSON.stringify(payload)
+            });
+            try { data = await res.json(); } catch (_) {}
+            sent = res.ok && (data.success === true || data.success === "true");
+            if (!sent) {
+              console.error("StartOps form — server reply:", res.status, data);
+              throw new Error((data && data.message) || "send failed");
+            }
           }
           refEl.textContent = ref;
           form.hidden = true;
