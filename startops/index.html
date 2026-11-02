@@ -710,7 +710,6 @@
           _subject: "[" + ref + "] StartOps inquiry — " + service,
           _template: "table",
           _captcha: "false",
-          _cc: email,
           "Reference Number": ref,
           name: name,
           email: email,
@@ -719,6 +718,9 @@
           "Terms & Agreement": "Read and understood — accepted on " + new Date().toString()
         };
 
+        // send the client a copy (skipped when the client uses the merchant's own address)
+        if (email.toLowerCase() !== "cathiesnest@gmail.com") payload._cc = email;
+
         btn.disabled = true;
         try {
           const res = await fetch(ENDPOINT, {
@@ -726,12 +728,17 @@
             headers: { "Content-Type": "application/json", "Accept": "application/json" },
             body: JSON.stringify(payload)
           });
-          const data = await res.json();
-          if (!res.ok || !(data.success === true || data.success === "true")) throw new Error("send failed");
+          let data = {};
+          try { data = await res.json(); } catch (_) {}
+          if (!res.ok || !(data.success === true || data.success === "true")) {
+            console.error("StartOps form — server reply:", res.status, data);
+            throw new Error((data && data.message) || "send failed");
+          }
           refEl.textContent = ref;
           form.hidden = true;
           done.hidden = false;
         } catch (ex) {
+          console.error("StartOps form — error:", ex);
           err.textContent = "Sorry, your message could not be sent. Please try again in a moment, or email cathiesnest@gmail.com directly.";
           err.hidden = false;
         } finally {
