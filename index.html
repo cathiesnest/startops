@@ -224,6 +224,15 @@
     }
     .promise li:nth-child(odd) { color: var(--sky); }
     .promise li:last-child { color: var(--gold); }
+    .promise li {
+      justify-self: center; padding: 8px 28px; border-radius: 14px; cursor: default;
+      transition: transform .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+    .promise li:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,.09);
+      box-shadow: 0 14px 30px rgba(0,0,0,.28);
+    }
 
     /* Footer */
     footer { background: #0f2638; color: #c3d0d8; padding: 48px 0 36px; font-size: .88rem; }
