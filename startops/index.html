@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,6 +55,7 @@
         radial-gradient(ellipse at 30% 95%, rgba(214,190,140,.55), transparent 55%),
         linear-gradient(180deg, #a9bdca 0%, #c9d4d9 55%, #e6e0cf 100%);
     }
+
     /* soft "grain" sparkle like the reference image */
     .hero::before {
       content: "";
@@ -83,13 +85,16 @@
       transition: transform .35s ease, filter .35s ease;
       outline-offset: 8px;
     }
+
     .rocket-link:hover,
     .rocket-link:focus-visible {
       transform: translateY(-8px) rotate(-3deg) scale(1.04);
       filter: drop-shadow(0 14px 18px rgba(23,54,77,.28));
     }
+
     .rocket-link:active { transform: translateY(-2px) scale(.98); }
     .rocket-link svg { width: 100%; height: auto; display: block; }
+
     .rocket-hint {
       display: block; text-align: center; margin-top: 10px;
       font-size: .78rem; letter-spacing: .08em; text-transform: uppercase;
@@ -106,28 +111,33 @@
       letter-spacing: -.01em;
       color: var(--navy);
     }
+
     .tagline {
       margin-top: 18px;
       font-size: clamp(1.15rem, 2.6vw, 1.7rem);
       font-weight: 500;
       color: var(--navy);
     }
+
     .subline {
       margin-top: 22px;
       font-size: clamp(.95rem, 1.8vw, 1.15rem);
       color: var(--navy);
     }
+
     .rule { border: 0; height: 1.5px; background: var(--navy); margin: 14px 0 14px; max-width: 540px; }
     .powered { font-size: .95rem; color: var(--navy-soft); }
     .powered strong { color: var(--navy); }
 
     .hero-cta { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+
     .btn {
       display: inline-block; text-decoration: none;
       padding: 12px 22px; border-radius: 999px;
       font-weight: 600; font-size: .95rem;
       transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
     }
+
     .btn-primary { background: var(--navy); color: var(--white); }
     .btn-primary:hover { background: var(--teal-dark); transform: translateY(-2px); box-shadow: var(--shadow); }
     .btn-ghost { border: 1.5px solid var(--navy); color: var(--navy); }
@@ -135,15 +145,18 @@
 
     /* ---------- SECTIONS ---------- */
     section { padding: 80px 0; }
+
     .eyebrow {
       font-size: .8rem; letter-spacing: .14em; text-transform: uppercase;
       color: var(--teal); font-weight: 600; margin-bottom: 10px;
     }
+
     h2 {
       font-family: "Fraunces", Georgia, serif;
       font-size: clamp(1.8rem, 4vw, 2.6rem);
       line-height: 1.15; margin-bottom: 14px;
     }
+
     .lead { max-width: 680px; color: var(--navy-soft); font-size: 1.08rem; }
 
     .about { background: var(--cream); text-align: center; }
@@ -155,6 +168,7 @@
       display: grid; gap: 20px;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
+
     .card {
       background: var(--white);
       border-radius: var(--radius);
@@ -163,6 +177,7 @@
       border-top: 4px solid var(--teal);
       transition: transform .25s ease, box-shadow .25s ease;
     }
+
     .card:nth-child(even) { border-top-color: var(--gold); }
     .card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(23,54,77,.18); }
     .card .icon { font-size: 1.8rem; margin-bottom: 10px; }
@@ -173,10 +188,12 @@
 
     /* Resources */
     .resources { background: var(--cream); }
+
     .res-grid {
       margin-top: 36px; display: grid; gap: 20px;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
+
     .res {
       display: flex; flex-direction: column; gap: 8px;
       background: var(--white); border-radius: var(--radius);
@@ -185,6 +202,7 @@
       border-left: 5px solid var(--teal);
       transition: transform .25s ease, border-color .25s ease;
     }
+
     .res:hover { transform: translateY(-4px); border-left-color: var(--gold); }
     .res h3 { font-size: 1.15rem; }
     .res p { color: var(--navy-soft); font-size: .96rem; }
@@ -197,12 +215,15 @@
     .promise {
       background: var(--navy); color: var(--white); text-align: center;
     }
+
     .promise .eyebrow { color: var(--gold); }
     .promise ul { list-style: none; margin-top: 26px; display: grid; gap: 10px; }
+
     .promise li {
       font-family: "Fraunces", Georgia, serif;
       font-size: clamp(1.15rem, 2.8vw, 1.6rem);
     }
+
     .promise li:nth-child(odd) { color: var(--sky); }
     .promise li:last-child { color: var(--gold); }
 
@@ -210,8 +231,32 @@
     footer { background: #0f2638; color: #c3d0d8; padding: 48px 0 36px; font-size: .88rem; }
     footer h4 { color: var(--white); margin-bottom: 10px; font-size: .95rem; }
     .disclaimer { max-width: 900px; display: grid; gap: 8px; }
-    .foot-bottom { margin-top: 28px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.15); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+    .foot-bottom {
+      margin-top: 28px; padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.15);
+      display: flex; justify-content: space-between;
+      flex-wrap: wrap; gap: 8px;
+    }
+
     .foot-bottom strong { color: var(--white); }
+
+    /* Intellectual Property Notice */
+    .ip-notice {
+      margin-top: 24px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.15);
+      display: grid;
+      gap: 8px;
+      font-size: .82rem;
+      line-height: 1.7;
+      color: #c3d0d8;
+    }
+
+    .ip-notice .copyright {
+      color: var(--white);
+      font-weight: 600;
+    }
 
     /* Back-to-top rocket */
     .to-top {
@@ -222,6 +267,7 @@
       box-shadow: var(--shadow); opacity: 0; pointer-events: none;
       transition: opacity .3s ease, transform .2s ease;
     }
+
     .to-top.show { opacity: 1; pointer-events: auto; }
     .to-top:hover { transform: translateY(-3px); background: var(--teal-dark); }
 
@@ -412,10 +458,18 @@
         <p>This is a paid referral arrangement only and does not constitute an endorsement by Alison or a partnership, agency, or employment relationship between StartOps and Alison.</p>
         <p>Participation in any external course, program, or assessment does not guarantee employment, income, career advancement, or any particular outcome.</p>
       </div>
+
       <div class="foot-bottom">
         <span><strong>StartOps</strong> — Build. Test. Improve. Grow.</span>
         <span>Powered by CathiesNest Digital · © <span id="year"></span></span>
       </div>
+
+      <!-- ================= INTELLECTUAL PROPERTY NOTICE ================= -->
+      <div class="ip-notice">
+        <p class="copyright">© 2026 CathiesNest Digital. All Rights Reserved.</p>
+        <p>Original website code, designs, digital tools, written content, and branding are the intellectual property of CathiesNest Digital, unless otherwise indicated. Unauthorized reproduction, redistribution, or commercial use without written permission is prohibited.</p>
+      </div>
+
     </div>
   </footer>
 
