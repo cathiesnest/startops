@@ -356,6 +356,31 @@
     .copy-msg { color: var(--teal-dark); font-weight: 600; font-size: .92rem; margin-top: 6px; }
     .ok-msg { color: var(--teal-dark) !important; font-weight: 600; }
 
+    /* Reviews */
+    .reviews { background: var(--cream); }
+    .reviews .head { text-align: center; margin-bottom: 30px; }
+    .reviews .head .lead { margin-inline: auto; }
+    .rating-summary { margin-top: 12px; font-weight: 600; color: var(--navy); }
+    .rating-summary .stars-gold { color: var(--gold); letter-spacing: .1em; }
+    .review-grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); margin-bottom: 34px; }
+    .review-card {
+      background: var(--white); border-radius: var(--radius); padding: 24px;
+      box-shadow: var(--shadow); border-top: 4px solid var(--gold);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .review-card:hover { transform: translateY(-5px); box-shadow: 0 16px 36px rgba(23,54,77,.18); }
+    .review-card .stars-gold { color: var(--gold); font-size: 1.15rem; letter-spacing: .12em; }
+    .review-card p { margin: 10px 0 14px; color: var(--navy); font-size: .98rem; }
+    .review-card .who { font-size: .85rem; color: var(--navy-soft); }
+    .review-card .badge { display: inline-block; margin-left: 6px; font-size: .7rem; letter-spacing: .06em; text-transform: uppercase; background: var(--teal); color: var(--white); padding: 2px 8px; border-radius: 999px; }
+    .review-empty { text-align: center; color: var(--navy-soft); background: linear-gradient(90deg, #e7e4d8 0%, #ece8de 50%, #f0ebdf 100%); border: 1.5px dashed #c8d3d9; border-radius: var(--radius); padding: 28px 22px; margin-bottom: 34px; }
+    .star-pick { display: flex; gap: 6px; }
+    .star-pick button { border: 0; background: transparent; cursor: pointer; font-size: 2rem; line-height: 1; color: #7e97a8; padding: 2px 4px; transition: transform .15s ease, color .15s ease; }
+    .star-pick button.on { color: var(--gold); }
+    .star-pick button:hover { transform: translateY(-2px); }
+    .priv-note { font-size: .82rem; color: var(--navy-soft); }
+    #reviewBox { background: linear-gradient(90deg, #d3dde3 0%, #d6e0e5 25%, #c5d3db 50%, #b3c6d1 75%, #aabfcb 100%); }
+
     /* Back-to-top rocket */
     .to-top {
       position: fixed; right: 18px; bottom: 18px; z-index: 50;
@@ -549,6 +574,86 @@
         <li>Improve as you learn.</li>
         <li>Grow with better systems.</li>
       </ul>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section class="reviews" id="reviews">
+    <div class="container">
+      <div class="head">
+        <p class="eyebrow">⭐ Client Reviews</p>
+        <h2>What clients say</h2>
+        <p class="lead">Honest feedback from people we've worked with. Names are never shown.</p>
+        <p class="rating-summary" id="ratingSummary" hidden></p>
+      </div>
+
+      <div id="reviewList"></div>
+
+      <details class="contact-box" id="reviewBox">
+        <summary>
+          <span>
+            <span class="eyebrow">✍️ Share your experience</span>
+            <h2>Leave a Review</h2>
+            <span class="sub">Worked with StartOps? We'd love to hear how it went. Tap to open.</span>
+          </span>
+          <span class="arrow-circle" aria-hidden="true">▾</span>
+        </summary>
+
+        <div class="contact-body">
+          <form id="reviewForm" class="form-grid">
+            <div class="hp" aria-hidden="true">
+              <label>Leave this field empty <input type="text" name="_honey" tabindex="-1" autocomplete="off" /></label>
+            </div>
+
+            <div class="field">
+              <label id="rv-rate-label">Your rating</label>
+              <div class="star-pick" id="starPick" role="group" aria-labelledby="rv-rate-label">
+                <button type="button" data-v="1" aria-label="1 star" aria-pressed="false">★</button>
+                <button type="button" data-v="2" aria-label="2 stars" aria-pressed="false">★</button>
+                <button type="button" data-v="3" aria-label="3 stars" aria-pressed="false">★</button>
+                <button type="button" data-v="4" aria-label="4 stars" aria-pressed="false">★</button>
+                <button type="button" data-v="5" aria-label="5 stars" aria-pressed="false">★</button>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="rv-text">Your review</label>
+              <textarea id="rv-text" name="text" maxlength="600" placeholder="What was it like working with StartOps?" required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="rv-ref">Reference number (optional)</label>
+              <input id="rv-ref" name="ref" type="text" placeholder="Example: SO-261101-K7M2P" autocomplete="off" />
+              <small class="field-hint">Adding it helps us confirm you're a client.</small>
+            </div>
+
+            <div class="field">
+              <label for="rv-name">Name</label>
+              <input id="rv-name" name="name" type="text" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <label for="rv-email">Email address</label>
+              <input id="rv-email" name="email" type="email" autocomplete="email" required />
+              <small class="field-hint">Your name and email are for our records only and are never shown on the website.</small>
+            </div>
+
+            <label class="check">
+              <input type="checkbox" id="rv-consent" name="consent" required />
+              <span>I agree that StartOps may publish my review anonymously (no name or email).</span>
+            </label>
+
+            <p class="form-error" id="reviewError" role="alert" hidden></p>
+            <button type="submit" class="send-btn" id="reviewBtn">Send review</button>
+          </form>
+
+          <div class="done" id="reviewDone" hidden aria-live="polite">
+            <h3>Thank you for your review! 🌟</h3>
+            <p class="note">We read every review. Reviews are checked before they appear on the site, so yours may take a little while to show up.</p>
+            <div class="ref-box"><span class="ref-code" id="reviewIdOut"></span></div>
+            <p><button type="button" class="again-btn" id="reviewAgain">Close</button></p>
+          </div>
+        </div>
+      </details>
     </div>
   </section>
 
@@ -1363,6 +1468,128 @@
         refForm.reset(); fwdForm.reset(); fwdForm.hidden = true;
         done.hidden = true; typeSel.parentElement.hidden = false;
         typeSel.value = ""; show("");
+      });
+    })();
+
+    // Client reviews
+    (function () {
+      const ENDPOINT = "https://formsubmit.co/ajax/cathiesnest@gmail.com";
+
+      // ============================================================
+      // APPROVED REVIEWS: add real, approved reviews here, one per line.
+      // Each review email you receive includes a ready-to-paste line.
+      // Optional: add  "verified": true  only after confirming the person is a client.
+      // ============================================================
+      const REVIEWS = [
+        // {"rating":5,"text":"...","date":"2026-11"},
+      ];
+
+      const list = document.getElementById("reviewList");
+      const summary = document.getElementById("ratingSummary");
+      const stars = (n) => "★".repeat(n) + "☆".repeat(5 - n);
+
+      function monthLabel(d) {
+        const m = /^(\d{4})-(\d{2})/.exec(d || "");
+        if (!m) return "";
+        return new Date(+m[1], +m[2] - 1, 1).toLocaleString("en-US", { month: "long", year: "numeric" });
+      }
+
+      if (!REVIEWS.length) {
+        const e = document.createElement("div");
+        e.className = "review-empty";
+        e.textContent = "No reviews yet. Worked with us? We'd love to hear from you. Tap “Leave a Review” below.";
+        list.appendChild(e);
+      } else {
+        const grid = document.createElement("div");
+        grid.className = "review-grid";
+        let total = 0;
+        REVIEWS.forEach((r) => {
+          const n = Math.max(1, Math.min(5, Math.round(r.rating)));
+          total += n;
+          const card = document.createElement("article"); card.className = "review-card";
+          const s = document.createElement("div"); s.className = "stars-gold"; s.textContent = stars(n); s.setAttribute("aria-label", n + " out of 5 stars");
+          const p = document.createElement("p"); p.textContent = "“" + r.text + "”";
+          const w = document.createElement("div"); w.className = "who";
+          w.textContent = "Anonymous client" + (monthLabel(r.date) ? " · " + monthLabel(r.date) : "");
+          if (r.verified) { const bd = document.createElement("span"); bd.className = "badge"; bd.textContent = "Verified client"; w.appendChild(bd); }
+          card.append(s, p, w); grid.appendChild(card);
+        });
+        list.appendChild(grid);
+        const avg = (total / REVIEWS.length).toFixed(1);
+        summary.innerHTML = "";
+        const sg = document.createElement("span"); sg.className = "stars-gold"; sg.textContent = stars(Math.round(total / REVIEWS.length));
+        summary.append(sg, " " + avg + " out of 5 · " + REVIEWS.length + (REVIEWS.length === 1 ? " review" : " reviews"));
+        summary.hidden = false;
+      }
+
+      // ---- review form ----
+      const form = document.getElementById("reviewForm");
+      const done = document.getElementById("reviewDone");
+      const err = document.getElementById("reviewError");
+      const btn = document.getElementById("reviewBtn");
+      const pick = document.getElementById("starPick");
+      let rating = 0;
+
+      function paint() {
+        pick.querySelectorAll("button").forEach((b) => {
+          const on = +b.dataset.v <= rating;
+          b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(+b.dataset.v === rating));
+        });
+      }
+      pick.addEventListener("click", (e) => {
+        const b = e.target.closest("button"); if (!b) return;
+        rating = +b.dataset.v; paint();
+      });
+
+      function newId() {
+        const d = new Date(), pad = (n) => String(n).padStart(2, "0");
+        const chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
+        const r = new Uint32Array(5); crypto.getRandomValues(r);
+        let c = ""; r.forEach((v) => (c += chars[v % chars.length]));
+        return "RV-" + String(d.getFullYear()).slice(2) + pad(d.getMonth() + 1) + pad(d.getDate()) + "-" + c;
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault(); err.hidden = true;
+        if (form.elements["_honey"].value) return;
+        if (!rating) { err.textContent = "Please tap a star rating first."; err.hidden = false; return; }
+        const ref = form.elements["ref"].value.trim().toUpperCase();
+        if (ref && !/^(SO|HC|TK)-\d{6}-[A-Z0-9]{5}$/.test(ref)) {
+          err.textContent = "That reference number doesn't look right. It should look like SO-261101-K7M2P, or leave it blank."; err.hidden = false; return;
+        }
+        const id = newId(), now = new Date();
+        const text = form.elements["text"].value.trim();
+        const ym = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0");
+        const payload = {
+          _subject: "[" + id + "] New client review: " + stars(rating) + " (" + rating + "/5)",
+          _template: "table", _captcha: "false",
+          "Review ID": id,
+          "Rating": stars(rating) + "  (" + rating + " out of 5)",
+          "Review": text,
+          "Reference number given": ref || "(none given)",
+          "Name (private)": form.elements["name"].value.trim(),
+          "Email (private)": form.elements["email"].value.trim(),
+          "Consent": "Client agreed to anonymous publication of this review",
+          "Status": "PENDING: not published until you add it to the site",
+          "To publish: paste this line into the REVIEWS list in index.html": JSON.stringify({ rating: rating, text: text, date: ym }) + ",",
+          "Sent on": now.toLocaleString("en-US", { dateStyle: "full", timeStyle: "long" })
+        };
+        btn.disabled = true;
+        try {
+          const res = await fetch(ENDPOINT, { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(payload) });
+          let data = {}; try { data = await res.json(); } catch (_) {}
+          if (!res.ok || !(data.success === true || data.success === "true")) { console.error("StartOps review — server reply:", res.status, data); throw new Error("send failed"); }
+          document.getElementById("reviewIdOut").textContent = id;
+          form.hidden = true; done.hidden = false;
+        } catch (_) {
+          err.textContent = "Sorry, your review could not be sent. Please try again in a moment, or email cathiesnest@gmail.com directly.";
+          err.hidden = false;
+        } finally { btn.disabled = false; }
+      });
+
+      document.getElementById("reviewAgain").addEventListener("click", () => {
+        form.reset(); rating = 0; paint(); done.hidden = true; form.hidden = false;
+        document.getElementById("reviewBox").open = false;
       });
     })();
   </script>
