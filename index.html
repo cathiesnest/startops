@@ -151,10 +151,27 @@
 
     /* Cards */
     .cards {
-      margin-top: 40px;
-      display: grid; gap: 20px;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      margin-top: 30px;
+      display: flex; gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+      padding: 12px 4px 28px;
+      scrollbar-width: none;
+      cursor: grab;
     }
+    .cards::-webkit-scrollbar { display: none; }
+    .cards.dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+    .cards .card { flex: 0 0 clamp(240px, 28%, 300px); scroll-snap-align: start; }
+    .carousel-nav { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 4px; }
+    .carousel-nav button {
+      width: 46px; height: 46px; border-radius: 50%; border: 0; cursor: pointer;
+      background: var(--navy); color: var(--white); font-size: 1.5rem; line-height: 1;
+      transition: background .2s ease, transform .2s ease;
+    }
+    .carousel-nav button:hover { background: var(--teal-dark); transform: translateY(-2px); }
+    .carousel-hint { font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--navy-soft); opacity: .8; }
     .card {
       background: var(--white);
       border-radius: var(--radius);
@@ -319,7 +336,7 @@
       <p class="eyebrow">🛠️ What We Build</p>
       <h2>Tools and systems that keep your startup moving.</h2>
 
-      <div class="cards">
+      <div class="cards" id="cards" tabindex="0" aria-label="What we build — swipe or scroll sideways">
         <article class="card">
           <div class="icon">🖥️</div>
           <h3>Front-End Tools</h3>
@@ -355,6 +372,12 @@
           <h3>Custom Solutions</h3>
           <p>Built around the startup's actual needs.</p>
         </article>
+      </div>
+
+      <div class="carousel-nav">
+        <button type="button" id="cardsPrev" aria-label="Previous">‹</button>
+        <span class="carousel-hint">Swipe</span>
+        <button type="button" id="cardsNext" aria-label="Next">›</button>
       </div>
     </div>
   </section>
@@ -437,6 +460,30 @@
     window.addEventListener("scroll", () => {
       toTop.classList.toggle("show", window.scrollY > 500);
     });
+
+    // What We Build carousel: arrows + mouse drag (touch swipe works natively)
+    (function () {
+      const track = document.getElementById("cards");
+      const step = () => Math.max(260, track.clientWidth * 0.8);
+      document.getElementById("cardsPrev").addEventListener("click", () => track.scrollBy({ left: -step(), behavior: "smooth" }));
+      document.getElementById("cardsNext").addEventListener("click", () => track.scrollBy({ left: step(), behavior: "smooth" }));
+
+      let down = false, startX = 0, startLeft = 0;
+      track.addEventListener("pointerdown", (e) => {
+        if (e.pointerType !== "mouse") return;
+        down = true; startX = e.clientX; startLeft = track.scrollLeft;
+        track.classList.add("dragging");
+      });
+      window.addEventListener("pointermove", (e) => {
+        if (!down) return;
+        track.scrollLeft = startLeft - (e.clientX - startX);
+      });
+      window.addEventListener("pointerup", () => { down = false; track.classList.remove("dragging"); });
+      track.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight") track.scrollBy({ left: step(), behavior: "smooth" });
+        if (e.key === "ArrowLeft") track.scrollBy({ left: -step(), behavior: "smooth" });
+      });
+    })();
   </script>
 </body>
 </html>
