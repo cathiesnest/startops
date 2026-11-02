@@ -379,6 +379,21 @@
     .star-pick button.on { color: var(--gold); }
     .star-pick button:hover { transform: translateY(-2px); }
     .priv-note { font-size: .82rem; color: var(--navy-soft); }
+
+    /* Share link */
+    .share { max-width: 900px; padding-bottom: 28px; margin-bottom: 28px; border-bottom: 1px solid rgba(255,255,255,.15); }
+    .share-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 24px; }
+    .share-text strong { display: block; color: var(--white); font-size: 1rem; }
+    .share-text span { color: #c3d0d8; font-size: .9rem; }
+    .share-actions { flex: 0 0 auto; }
+    .share-btn {
+      border: 0; cursor: pointer; font: inherit; font-weight: 600; font-size: .95rem;
+      padding: 12px 28px; border-radius: 999px; background: var(--gold); color: var(--navy);
+      transition: transform .2s ease, background .2s ease;
+    }
+    .share-btn:hover { background: #d8b673; transform: translateY(-2px); }
+    .share-msg { margin-top: 14px; color: var(--white); font-size: .93rem; background: rgba(47,127,134,.35); border: 1px solid rgba(255,255,255,.2); border-radius: 12px; padding: 10px 14px; }
+    .share-tip { margin-top: 10px; font-size: .8rem; color: #9fb2bf; }
     #reviewBox { background: linear-gradient(90deg, #d3dde3 0%, #d6e0e5 25%, #c5d3db 50%, #b3c6d1 75%, #aabfcb 100%); }
 
     /* Back-to-top rocket */
@@ -891,6 +906,20 @@
   <!-- ================= FOOTER ================= -->
   <footer>
     <div class="container">
+      <div class="share" id="share">
+        <div class="share-top">
+          <div class="share-text">
+            <strong>Know someone building something great?</strong>
+            <span>Pass StartOps along, or keep the link handy for later.</span>
+          </div>
+          <div class="share-actions">
+            <button type="button" class="share-btn" id="shareBtn">Copy link</button>
+          </div>
+        </div>
+        <p class="share-msg" id="shareMsg" role="status" aria-live="polite" hidden>✓ Link copied. Thanks for spreading the word! It's ready to share with anyone who could use some business support.</p>
+        <p class="share-tip" id="shareTip"></p>
+      </div>
+
       <details class="disclaimer">
         <summary>Affiliate Disclaimer <span class="arrow" aria-hidden="true">▾</span></summary>
         <div class="disclaimer-body">
@@ -1590,6 +1619,46 @@
       document.getElementById("reviewAgain").addEventListener("click", () => {
         form.reset(); rating = 0; paint(); done.hidden = true; form.hidden = false;
         document.getElementById("reviewBox").open = false;
+      });
+    })();
+
+    // Copy / share link
+    (function () {
+      // Always the live address of this page. The fallback is only used if the page is opened in a preview or from a file.
+      const FALLBACK_URL = "https://cathiesnest.github.io/";
+      const url = /^https?:$/.test(location.protocol) ? location.origin + location.pathname : FALLBACK_URL;
+      const btn = document.getElementById("shareBtn");
+      const msg = document.getElementById("shareMsg");
+      const tip = document.getElementById("shareTip");
+
+      const touch = window.matchMedia && window.matchMedia("(pointer: coarse)").matches;
+      const mac = /Mac|iPhone|iPad/i.test(navigator.platform || navigator.userAgent);
+      tip.textContent = touch
+        ? "Tip: to bookmark this site, use your browser's menu and choose “Add bookmark”."
+        : "Tip: press " + (mac ? "⌘ + D" : "Ctrl + D") + " to bookmark this site.";
+
+      let t1, t2;
+      btn.addEventListener("click", async () => {
+        let ok = true;
+        try { await navigator.clipboard.writeText(url); }
+        catch (_) {
+          try {
+            const ta = document.createElement("textarea");
+            ta.value = url; ta.setAttribute("readonly", ""); ta.style.cssText = "position:fixed;left:-9999px;top:0;";
+            document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, url.length);
+            ok = document.execCommand("copy"); document.body.removeChild(ta);
+          } catch (e2) { ok = false; }
+        }
+        clearTimeout(t1); clearTimeout(t2);
+        if (ok) {
+          msg.textContent = "✓ Link copied. Thanks for spreading the word! It's ready to share with anyone who could use some business support.";
+          btn.textContent = "Copied ✓";
+        } else {
+          msg.textContent = "Couldn't copy automatically. You can copy the link from your browser's address bar. Thanks for sharing!";
+        }
+        msg.hidden = false;
+        t1 = setTimeout(() => { btn.textContent = "Copy link"; }, 2500);
+        t2 = setTimeout(() => { msg.hidden = true; }, 9000);
       });
     })();
   </script>
